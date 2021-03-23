@@ -1,12 +1,12 @@
 # diet-manager
 Final project for Web appliction module at UEP.
 
-1.	Domain
+### 1.	Domain
 
 The main goal of this project is to provide simple but robust application for diet and meal management. Simple is the most important word here, as our goal is to provide basic meal tracking functionality with calories or macros for each dish.  Robust as we want to make it fast and accessible from many devices, UI should easy to use both from mobile and computer devices perspective. Making diet management fast and easy is our main purpose.
 Main dashboard off the app will present our day with meals that are about to be eaten and those that we’ve already consumed. App will also provide data about how many calories or macros were consumed. User’s will have the possibility to add their own meals and plans. Access to historical data about diet and meals as well measurement of objectives constitutes for another important functionality.
 
-2.	User roles
+### 2.	User roles
 
 There will be three type of users in our app. 
 •	Basic user, he can access the app without registration, and use basic functionalities as for example planning meals for whole day, but his data won’t be recorded in the database so he will not have ability to lookup the history or set goals.
@@ -14,7 +14,7 @@ There will be three type of users in our app.
 •	Administrator, his role is to provide support for other users he have access to every functionality of the app and can manipulate data of registered users from admin panel view. 
 •	Manager, he will have access to aggregate data that can be used for further marketing purposes.
 
-3.	Functionalities 
+### 3.	Functionalities 
 
 Main functionalities of our app will consist of:
 •	Setting goal for your diet – user can select the limit of macros or calories in the diet. 
