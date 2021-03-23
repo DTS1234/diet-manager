@@ -1,5 +1,5 @@
 # diet-manager
-Final project for Web appliction module at UEP.
+##Final project for Web appliction module at UEP.
 
 ### 1.	Domain
 
