@@ -1,4 +1,4 @@
-package uep.diet.manager.meal;
+package uep.diet.manager.meal.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 26.03.2021
  */
 public interface MealRepository extends JpaRepository<Meal, Long> {
+    Meal findByName(String name);
 }
