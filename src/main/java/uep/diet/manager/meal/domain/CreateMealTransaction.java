@@ -4,13 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import uep.diet.manager.ingredient.domain.Ingredient;
 import uep.diet.manager.ingredient.domain.IngredientRepository;
 import uep.diet.manager.ingredient.domain.IngredientWrongParametersException;
-import uep.diet.manager.ingredient.dto.IngredientDTO;
 import uep.diet.manager.ingredient.dto.IngredientMapper;
 import uep.diet.manager.meal.dto.MealDTO;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

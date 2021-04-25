@@ -1,15 +1,6 @@
 package uep.diet.manager.ingredient.dto;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import uep.diet.manager.ingredient.domain.Ingredient;
-import uep.diet.manager.ingredient.dto.IngredientDTO;
-import uep.diet.manager.meal.domain.Meal;
-import uep.diet.manager.meal.domain.MealRepository;
-import uep.diet.manager.meal.dto.MealDTO;
-import uep.diet.manager.meal.dto.MealMapper;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author akazmierczak

@@ -3,12 +3,14 @@ package uep.diet.manager.ingredient.domain;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import uep.diet.manager.ingredient.domain.IngredientRepository;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
+import uep.diet.manager.ingredient.dto.IngredientDTOList;
 import uep.diet.manager.ingredient.dto.IngredientMapper;
-import uep.diet.manager.meal.dto.MealDTO;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author akazmierczak
@@ -32,12 +34,37 @@ public class IngredientService {
 
     public IngredientDTO getById(Long id) {
         Optional<Ingredient> ingredient = ingredientRepository.findById(id);
-        if (ingredient.isPresent())
-        {
+        if (ingredient.isPresent()) {
             return IngredientMapper.toDto(ingredient.get());
         }
 
         throw new IngredientNotFoundException("Ingredient with id " + id + " was not found.");
+    }
 
+    public IngredientDTOList getAll() {
+
+        IngredientDTOList ingredientDTOList = new IngredientDTOList();
+
+        List<Ingredient> ingredientList = ingredientRepository.findAll();
+        List<IngredientDTO> targetList = new ArrayList<>();
+
+        if (ingredientList == null) {
+            ingredientDTOList.setIngredients(targetList);
+            return ingredientDTOList;
+        }
+
+        ingredientDTOList.setIngredients(ingredientList.stream().map(IngredientMapper::toDto).collect(Collectors.toList()));
+        return ingredientDTOList;
+    }
+
+    public void deleteById(Long id) {
+        Optional<Ingredient> ingredientOptional = ingredientRepository.findById(id);
+        if (ingredientOptional.isPresent())
+        {
+            ingredientRepository.deleteById(id);
+        }else
+        {
+            throw new IngredientNotFoundException("No ingredient with id: " + id);
+        }
     }
 }

@@ -1,0 +1,25 @@
+package uep.diet.manager.user.dto;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import uep.diet.manager.day.domain.Day;
+
+import java.util.List;
+
+/**
+ * @author akazmierczak
+ * @date 20.04.2021
+ */
+@Data
+public class UserDTO {
+
+    private Long userId;
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String email;
+    @JsonIgnore
+    private List<Day> days;
+
+
+}

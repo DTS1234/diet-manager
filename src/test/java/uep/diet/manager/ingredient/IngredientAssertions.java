@@ -3,8 +3,6 @@ package uep.diet.manager.ingredient;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import uep.diet.manager.ingredient.domain.Ingredient;
-import uep.diet.manager.meal.MealAssertions;
-import uep.diet.manager.meal.domain.Meal;
 
 /**
  * @author akazmierczak

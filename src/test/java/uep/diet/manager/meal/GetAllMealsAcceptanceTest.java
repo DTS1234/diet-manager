@@ -47,6 +47,10 @@ class GetAllMealsAcceptanceTest {
                 .body("meals[2].name", Matchers.equalTo("Beef Steak"))
                 .body("meals[3].name", Matchers.equalTo("Tiramisu"))
                 .body("meals[4].name", Matchers.equalTo("Pancakes"))
-                .body("meals[0].ingredients[0].name", Matchers.equalTo("name"));
+                .body("meals[0].ingredients[0].name", Matchers.equalTo("name"))
+                .body("meals[0].ingredients[0].caloriesPer100g", Matchers.equalTo(12))
+                .body("meals[0].ingredients[0].fat", Matchers.equalTo(14))
+                .body("meals[0].ingredients[0].protein", Matchers.equalTo(15))
+                .body("meals[0].ingredients[0].carbohydrates", Matchers.equalTo(13));
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uep.diet.manager.ingredient.domain.IngredientService;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
+import uep.diet.manager.ingredient.dto.IngredientDTOList;
 
 /**
  * @author akazmierczak
@@ -27,10 +28,23 @@ public class IngredientController {
     }
 
     @GetMapping(value = "{id}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get ingredient by its id")
     public IngredientDTO getById(@PathVariable Long id) {
         return ingredientService.getById(id);
+    }
+
+    @GetMapping(value = "/all")
+    @ResponseStatus(HttpStatus.OK)
+    public IngredientDTOList getAll() {
+        return ingredientService.getAll();
+    }
+
+    @DeleteMapping(value = "{id}/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteById(@PathVariable Long id) {
+        ingredientService.deleteById(id);
+        return "Deleted successfully";
     }
 
 }

@@ -7,6 +7,7 @@ import uep.diet.manager.ingredient.domain.Ingredient;
 import uep.diet.manager.ingredient.domain.IngredientRepository;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
 import uep.diet.manager.ingredient.dto.IngredientMapper;
+import uep.diet.manager.meal.dto.MealCaloriesDTO;
 import uep.diet.manager.meal.dto.MealDTO;
 import uep.diet.manager.meal.dto.MealListDTO;
 import uep.diet.manager.meal.dto.MealMapper;
@@ -80,7 +81,11 @@ public class MealService {
 
         mealListDTO.setMeals(allMeals);
 
-
         return mealListDTO;
+    }
+
+    public MealCaloriesDTO calculateCaloriesSum(Long id) {
+        CalculateCaloriesTransaction calculateCaloriesTransaction = new CalculateCaloriesTransaction(mealRepository);
+        return calculateCaloriesTransaction.execute(id);
     }
 }

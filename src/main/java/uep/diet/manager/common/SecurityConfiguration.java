@@ -53,7 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/css/**", "/webjars/**", "/meal/**", "/ingredient/**", "/h2-console/**");
+        web.ignoring().mvcMatchers("/css/**", "/webjars/**", "/meal/**",
+                "/ingredient/**", "/h2-console/**", "**/**", "/users/**", "/user/**");
     }
 
 
