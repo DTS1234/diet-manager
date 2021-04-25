@@ -67,14 +67,13 @@ class CreateMealAcceptanceTest {
 
         Meal mealFound = getMealFromDatabase();
         MealAssertions.assertThat(mealFound)
-                .hasMealId(1L)
                 .hasName(anyValidMeal.getName())
                 .hasIngredientWithName("Test 1", 0)
                 .hasIngredientWithName("Test 2", 1);
     }
 
     private Meal getMealFromDatabase() {
-        Optional<Meal> optionalMeal = mealRepository.findById(1L);
+        Optional<Meal> optionalMeal = mealRepository.findByName("Pancakes");
         return optionalMeal.orElseThrow(RuntimeException::new);
     }
 

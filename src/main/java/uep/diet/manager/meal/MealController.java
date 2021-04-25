@@ -7,10 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import uep.diet.manager.meal.domain.MealService;
+import uep.diet.manager.meal.dto.MealCaloriesDTO;
 import uep.diet.manager.meal.dto.MealDTO;
 import uep.diet.manager.meal.dto.MealListDTO;
-
-import java.util.List;
 
 /**
  * @author akazmierczak
@@ -37,7 +36,7 @@ public class MealController {
         return "Meal deleted successfully";
     }
 
-    @PatchMapping("/{id}/update")
+    @RequestMapping(method = RequestMethod.PATCH, value = "/{id}/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public MealDTO update(@PathVariable Long id, @RequestBody MealDTO newMealDTO) {
         return mealService.updateMeal(id, newMealDTO);
@@ -54,4 +53,9 @@ public class MealController {
         return mealService.getAll();
     }
 
+    @GetMapping("/{id}/calories")
+    @Operation(description = "Returns sum of calories for meal.")
+    public MealCaloriesDTO getCaloriesSum(@PathVariable Long id){
+        return mealService.calculateCaloriesSum(id);
+    }
 }

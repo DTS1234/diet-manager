@@ -68,7 +68,7 @@ class CreateIngredientAcceptanceTest {
     }
 
     private Ingredient getIngredientFromDb() {
-        Optional<Ingredient> optionalIngredient = ingredientRepository.findById(1L);
+        Optional<Ingredient> optionalIngredient = ingredientRepository.findByName("Test 1");
         return optionalIngredient.orElseThrow(RuntimeException::new);
     }
 

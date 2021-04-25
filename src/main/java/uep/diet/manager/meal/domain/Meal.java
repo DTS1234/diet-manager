@@ -2,10 +2,12 @@ package uep.diet.manager.meal.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import uep.diet.manager.day.domain.Day;
 import uep.diet.manager.ingredient.domain.Ingredient;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author akazmierczak
@@ -22,4 +24,7 @@ public class Meal {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "meal")
     private List<Ingredient> ingredients;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "meals")
+    private Set<Day> days;
 }

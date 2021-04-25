@@ -1,8 +1,6 @@
 package uep.diet.manager.meal;
 
 import groovy.util.logging.Slf4j;
-import io.restassured.http.Header;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import uep.diet.manager.meal.domain.MealRepository;
 import uep.diet.manager.meal.dto.MealDTO;
 
 import java.util.Collections;
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;

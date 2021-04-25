@@ -19,7 +19,12 @@ class UpdateMealTransaction {
         Meal newMealEntity = MealMapper.toEntity(newMeal);
         Meal savedMeal;
         Optional<Meal> optionalMeal = mealRepository.findById(id);
+
         if (optionalMeal.isPresent()) {
+
+            Meal oldMeal = optionalMeal.get();
+            newMealEntity.setMealId(oldMeal.getMealId());
+
             savedMeal = mealRepository.save(newMealEntity);
 
             List<Ingredient> savedMealIngredients = savedMeal.getIngredients();

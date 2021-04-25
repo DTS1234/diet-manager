@@ -1,6 +1,5 @@
 package uep.diet.manager.meal.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
 
