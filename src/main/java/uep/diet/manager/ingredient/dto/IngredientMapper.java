@@ -45,6 +45,7 @@ public class IngredientMapper {
         ingredient.setFat(fat);
         ingredient.setProtein(protein);
 
+
         return ingredient;
     }
 
