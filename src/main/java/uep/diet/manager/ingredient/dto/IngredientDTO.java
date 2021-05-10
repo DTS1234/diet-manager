@@ -20,4 +20,6 @@ public class IngredientDTO {
     private int fat;
     private int protein;
     private int carbohydrates;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private int quantityInGrams;
 }

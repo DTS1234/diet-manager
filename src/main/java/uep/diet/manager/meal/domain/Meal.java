@@ -2,6 +2,8 @@ package uep.diet.manager.meal.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import uep.diet.manager.day.domain.Day;
 import uep.diet.manager.ingredient.domain.Ingredient;
 
@@ -27,4 +29,9 @@ public class Meal {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "meals")
     private Set<Day> days;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "meals")
+    private List<Quantity> quantities;
+
 }
