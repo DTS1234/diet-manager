@@ -11,11 +11,13 @@ public class UserMapper {
     private UserMapper(){}
 
     public static UserDTO toDTO(User user) {
+
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
         String userName = user.getUsername();
         String email = user.getEmail();
         Long id = user.getUserId();
+        Integer kcalLimit = user.getDayLimit();
 
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(email);
@@ -23,6 +25,7 @@ public class UserMapper {
         userDTO.setLastName(lastName);
         userDTO.setUserId(id);
         userDTO.setUsername(userName);
+        userDTO.setKcalDayLimit(kcalLimit);
 
         return userDTO;
     }

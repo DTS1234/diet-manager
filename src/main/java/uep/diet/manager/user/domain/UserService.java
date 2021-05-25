@@ -2,19 +2,9 @@ package uep.diet.manager.user.domain;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.mapping.Collection;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import uep.diet.manager.day.domain.Day;
-import uep.diet.manager.day.dto.DayDTO;
-import uep.diet.manager.day.dto.DayMapper;
-import uep.diet.manager.user.dto.UserDTO;
-import uep.diet.manager.user.dto.UserDTOList;
-import uep.diet.manager.user.dto.UserDaysDTO;
-import uep.diet.manager.user.dto.UserMapper;
+import uep.diet.manager.user.dto.*;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -57,4 +47,11 @@ public class UserService {
         GetUserDaysTransaction getUserDays = new GetUserDaysTransaction(userRepository);
         return getUserDays.execute(id);
     }
+
+    public UserDTO updateDayLimit(Long userId, Integer newLimit)
+    {
+        ChangeKcalLimitTransaction changeKcalLimitTransaction = new ChangeKcalLimitTransaction(userRepository);
+        return changeKcalLimitTransaction.execute(userId, newLimit);
+    }
+
 }

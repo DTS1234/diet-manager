@@ -4,7 +4,6 @@ import lombok.Data;
 import uep.diet.manager.day.domain.Day;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.List;
 
 /**
@@ -21,10 +20,12 @@ public class User {
     private String lastName;
     @Column(nullable = false, unique = true)
     private String username;
-    @Email
     private String email;
     private String password;
 
     @OneToMany // one direction only
     private List<Day> days;
+
+    private Integer dayLimit;
+
 }
