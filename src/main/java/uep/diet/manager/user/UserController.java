@@ -1,11 +1,9 @@
 package uep.diet.manager.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uep.diet.manager.user.domain.UserService;
 import uep.diet.manager.user.dto.UserDTO;
 import uep.diet.manager.user.dto.UserDTOList;
@@ -45,5 +43,12 @@ public class UserController {
     public UserDaysDTO getUserDays(@PathVariable Long id) {
         return userService.getUserWithDays(id);
     }
+
+    @PutMapping("{id}/limit/{newLimit}")
+    @Operation(description = "Update kcal limit by passing user id and new limit as path variables.")
+    public UserDTO updateKcalLimit(@PathVariable Long id, @PathVariable Integer newLimit) {
+        return userService.updateDayLimit(id, newLimit);
+    }
+
 
 }
