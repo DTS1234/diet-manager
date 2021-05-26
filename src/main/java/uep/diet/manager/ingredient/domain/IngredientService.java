@@ -9,6 +9,7 @@ import uep.diet.manager.ingredient.dto.IngredientMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -59,12 +60,27 @@ public class IngredientService {
 
     public void deleteById(Long id) {
         Optional<Ingredient> ingredientOptional = ingredientRepository.findById(id);
-        if (ingredientOptional.isPresent())
-        {
+        if (ingredientOptional.isPresent()) {
             ingredientRepository.deleteById(id);
-        }else
-        {
+        } else {
             throw new IngredientNotFoundException("No ingredient with id: " + id);
         }
+    }
+
+    public IngredientDTOList findByText(String text) {
+
+        List<Ingredient> allIngredients = ingredientRepository.findAll();
+
+        List<IngredientDTO> filtered = allIngredients.stream()
+                .filter(element -> element.getName().toLowerCase().startsWith(text))
+                .collect(Collectors.toList())
+                    .stream()
+                    .map(IngredientMapper::toDto)
+                    .collect(Collectors.toList());
+
+        IngredientDTOList ingredientDTOList = new IngredientDTOList();
+        ingredientDTOList.setIngredients(filtered);
+        return ingredientDTOList;
+
     }
 }

@@ -1,22 +1,22 @@
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (1, 'Spaghetti');
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (2, 'Pizza');
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (3, 'Steak');
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (4, 'Tiramisu');
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (5, 'Ramen');
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (6, 'Chicken breast');
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (7, 'Sandwich with ham');
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (8, 'Milk with cereals');
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (9, 'Fried eggs');
-INSERT INTO MEAL
+INSERT INTO MEAL (meal_id, name)
 VALUES (10, 'Tomato soup');
 
 
