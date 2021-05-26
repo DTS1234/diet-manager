@@ -47,4 +47,10 @@ public class IngredientController {
         return "Deleted successfully";
     }
 
+    @GetMapping(value = "/{textValue}")
+    @Operation(summary = "Will return values starting with passed text.")
+    public IngredientDTOList searchByName(String name){
+        return ingredientService.findByText(name);
+    }
+
 }

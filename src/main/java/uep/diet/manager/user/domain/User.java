@@ -22,10 +22,11 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private Integer dayLimit;
 
     @OneToMany // one direction only
     private List<Day> days;
 
-    private Integer dayLimit;
+
 
 }

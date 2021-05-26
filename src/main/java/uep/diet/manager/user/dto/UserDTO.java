@@ -22,5 +22,4 @@ public class UserDTO {
     @JsonIgnore
     private List<Day> days;
 
-
 }

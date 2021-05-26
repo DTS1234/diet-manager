@@ -49,13 +49,24 @@ public class MealController {
 
     @GetMapping("/all")
     @Operation(summary = "Returns all meals available")
-    public MealListDTO getAll(){
+    public MealListDTO getAll() {
         return mealService.getAll();
     }
 
     @GetMapping("/{id}/calories")
     @Operation(description = "Returns sum of calories for meal.")
-    public MealCaloriesDTO getCaloriesSum(@PathVariable Long id){
+    public MealCaloriesDTO getCaloriesSum(@PathVariable Long id) {
         return mealService.calculateCaloriesSum(id);
     }
+
+    @PutMapping("/{id}/changeImg/{imgLink}")
+    public MealDTO updateImg(@PathVariable Long id, @PathVariable String imgLink) {
+        return mealService.updateImgLink(id, imgLink);
+    }
+
+    @PostMapping("/{mealId}/addIngredient/{ingredientId}")
+    public MealDTO addIngredientToMeal(@PathVariable Long mealId, @PathVariable Long ingredientId) {
+        return mealService.addIngredientToMeal(mealId, ingredientId);
+    }
+
 }

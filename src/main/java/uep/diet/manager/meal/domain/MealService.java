@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import uep.diet.manager.ingredient.domain.Ingredient;
+import uep.diet.manager.ingredient.domain.IngredientNotFoundException;
 import uep.diet.manager.ingredient.domain.IngredientRepository;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
 import uep.diet.manager.ingredient.dto.IngredientMapper;
@@ -87,5 +88,27 @@ public class MealService {
     public MealCaloriesDTO calculateCaloriesSum(Long id) {
         CalculateCaloriesTransaction calculateCaloriesTransaction = new CalculateCaloriesTransaction(mealRepository);
         return calculateCaloriesTransaction.execute(id);
+    }
+
+    public MealDTO updateImgLink(Long id, String imgLink) {
+        Meal meal = mealRepository.findById(id).orElseThrow(MealNotFoundException::new);
+        meal.setImgLink(imgLink);
+
+        return MealMapper.toDTO(mealRepository.save(meal));
+    }
+
+    public MealDTO addIngredientToMeal(Long mealId, Long ingredientId) {
+
+        Meal meal = mealRepository.findById(mealId).orElseThrow(MealNotFoundException::new);
+        List<Ingredient> mealIngredients = meal.getIngredients();
+
+        Ingredient ingredientFound = ingredientRepository.findById(ingredientId).orElseThrow(IngredientNotFoundException::new);
+        if (!mealIngredients.contains(ingredientFound))
+        {
+            mealIngredients.add(ingredientFound);
+        }
+        meal.setIngredients(mealIngredients);
+
+        return MealMapper.toDTO(mealRepository.save(meal));
     }
 }

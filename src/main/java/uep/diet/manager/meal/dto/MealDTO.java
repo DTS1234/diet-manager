@@ -1,9 +1,9 @@
 package uep.diet.manager.meal.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
-import uep.diet.manager.meal.domain.Quantity;
 
 import java.util.List;
 
@@ -14,8 +14,12 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MealDTO {
+
     private String name;
     private Long id;
     private List<IngredientDTO> ingredients;
     private List<QuantityDTO> quantities;
+    @JsonProperty("image_link")
+    private String imgLink;
+
 }

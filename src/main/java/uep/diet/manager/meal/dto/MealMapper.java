@@ -19,6 +19,7 @@ public class MealMapper {
         String name = meal.getName();
         List<Ingredient> ingredientList = meal.getIngredients();
         Long id = meal.getMealId();
+        String imgLink = meal.getImgLink();
 
         MealDTO mealDTO = new MealDTO();
         mealDTO.setId(id);
@@ -27,6 +28,7 @@ public class MealMapper {
                 .stream()
                 .map(IngredientMapper::toDto)
                 .collect(Collectors.toList()));
+        mealDTO.setImgLink(imgLink);
 
         return mealDTO;
     }
@@ -43,6 +45,7 @@ public class MealMapper {
                 .stream()
                 .map(IngredientMapper::toEntity)
                 .collect(Collectors.toList()));
+        meal.setImgLink(mealDTO.getImgLink());
 
         return meal;
     }
