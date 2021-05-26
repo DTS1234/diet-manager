@@ -19,7 +19,7 @@ public class MealDTO {
     private Long id;
     private List<IngredientDTO> ingredients;
     private List<QuantityDTO> quantities;
-    @JsonProperty("image_link")
+    @JsonProperty("imageLink")
     private String imgLink;
 
 }
