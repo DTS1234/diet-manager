@@ -32,7 +32,7 @@ public class Meal {
     private Set<Day> days;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "meals")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meal")
     private List<Quantity> quantities;
 
 }
