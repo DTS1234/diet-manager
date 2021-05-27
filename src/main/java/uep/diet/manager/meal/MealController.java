@@ -69,4 +69,11 @@ public class MealController {
         return mealService.addIngredientToMeal(mealId, ingredientId);
     }
 
+    @PostMapping("/{mealId}/addQuantityToIngredient/{ingredientId}/newQuantity/{quantity}")
+    public MealDTO addQuantityToIngredient(@PathVariable Long mealId,
+                                           @PathVariable Long ingredientId,
+                                           @PathVariable Integer quantity) {
+        return mealService.changeQuantityForIngredientInMeal(quantity, mealId, ingredientId);
+    }
+
 }

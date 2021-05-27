@@ -5,6 +5,7 @@ import uep.diet.manager.meal.domain.Meal;
 import uep.diet.manager.meal.dto.MealDTO;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author akazmierczak
@@ -12,7 +13,7 @@ import java.util.Arrays;
  */
 public class TestMeal extends Meal {
 
-    static Meal basic() {
+    public static Meal basic() {
         Meal meal = new Meal();
         meal.setName("Pancakes");
         meal.setIngredients(Arrays.asList(
@@ -22,7 +23,32 @@ public class TestMeal extends Meal {
         return meal;
     }
 
-    static MealDTO basicDTO() {
+    public static Meal basicWith6Ingredients() {
+        Meal meal = new Meal();
+        meal.setName("Pancakes");
+        meal.setIngredients(Arrays.asList(
+                TestIngredient.basicWithName("Test 1"),
+                TestIngredient.basicWithName("Test 2"),
+                TestIngredient.basicWithName("Test 3"),
+                TestIngredient.basicWithName("Test 4"),
+                TestIngredient.basicWithName("Test 5"),
+                TestIngredient.basicWithName("Test 6")
+        ));
+
+        return meal;
+    }
+
+
+    public static Meal emptyIngredients() {
+        Meal meal = new Meal();
+        meal.setName("Pancakes");
+        meal.setIngredients(Collections.emptyList());
+        meal.setMealId(1L);
+
+        return meal;
+    }
+
+    public static MealDTO basicDTO() {
         MealDTO meal = new MealDTO();
         meal.setId(1L);
         meal.setName("Pancakes");

@@ -6,6 +6,9 @@ import uep.diet.manager.ingredient.dto.IngredientMapper;
 import uep.diet.manager.meal.domain.Meal;
 import uep.diet.manager.meal.domain.Quantity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +23,7 @@ public class MealMapper {
         List<Ingredient> ingredientList = meal.getIngredients();
         Long id = meal.getMealId();
         String imgLink = meal.getImgLink();
+        List<Quantity> quantities = meal.getQuantities();
 
         MealDTO mealDTO = new MealDTO();
         mealDTO.setId(id);
@@ -29,6 +33,37 @@ public class MealMapper {
                 .map(IngredientMapper::toDto)
                 .collect(Collectors.toList()));
         mealDTO.setImgLink(imgLink);
+
+        if (quantities == null || (quantities.size() != ingredientList.size())) {
+
+            if (quantities == null) {
+                quantities = new ArrayList<>();
+            }
+
+            if (ingredientList.isEmpty()) {
+                mealDTO.setQuantities(Collections.emptyList());
+            } else {
+                int sizeDifference = quantities.size() - ingredientList.size();
+
+                if (sizeDifference < 0) {
+                    for (int i = 0; i < Math.abs(sizeDifference); i++) {
+                        quantities.add(Quantity.of(0, meal));
+                    }
+                }
+
+            }
+        }
+
+        List<Long> ingredientsIds = ingredientList.stream().map(Ingredient::getIngredientId).collect(Collectors.toList());
+
+        mealDTO.setQuantities(quantities.stream()
+                .map(MealMapper::quantityToDTO)
+                .collect(Collectors.toList()));
+        List<QuantityDTO> quantityDTOS = mealDTO.getQuantities();
+
+        for (int i = 0; i < ingredientsIds.size(); i++) {
+            quantityDTOS.get(i).setIngredientId(ingredientsIds.get(i));
+        }
 
         return mealDTO;
     }
@@ -53,11 +88,9 @@ public class MealMapper {
     public static QuantityDTO quantityToDTO(Quantity quantity) {
         Long id = quantity.getQuantityId();
         Integer grams = quantity.getGrams();
-        List<Meal> meals = quantity.getMeals();
 
         QuantityDTO quantityDTO = new QuantityDTO();
         quantityDTO.setQuantity(grams);
-        quantityDTO.setMeals(meals.stream().map(MealMapper::toDTO).collect(Collectors.toList()));
         quantityDTO.setId(id);
 
         return quantityDTO;

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * @author akazmierczak
@@ -14,16 +13,17 @@ import java.util.List;
 @Data
 public class Quantity {
     @Id
-    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quantityId;
     private Integer grams;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "quantity_meal",
-            joinColumns = @JoinColumn(name = "mealId"),
-            inverseJoinColumns = @JoinColumn(name = "quantityId"))
-    private List<Meal> meals;
+    @ManyToOne
+    private Meal meal;
 
+    public static Quantity of(Integer grams, Meal meal){
+        Quantity quantity = new Quantity();
+        quantity.setGrams(grams);
+        quantity.setMeal(meal);
+        return quantity;
+    }
 }

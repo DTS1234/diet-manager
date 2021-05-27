@@ -103,12 +103,22 @@ public class MealService {
         List<Ingredient> mealIngredients = meal.getIngredients();
 
         Ingredient ingredientFound = ingredientRepository.findById(ingredientId).orElseThrow(IngredientNotFoundException::new);
-        if (!mealIngredients.contains(ingredientFound))
-        {
+        if (!mealIngredients.contains(ingredientFound)) {
+
+            List<Meal> meals = ingredientFound.getMeal();
+            meals.add(meal);
+            ingredientRepository.save(ingredientFound);
+
             mealIngredients.add(ingredientFound);
         }
         meal.setIngredients(mealIngredients);
 
         return MealMapper.toDTO(mealRepository.save(meal));
     }
+
+    public MealDTO changeQuantityForIngredientInMeal(Integer newQuantity, Long mealId, Long ingredientId) {
+        ChangeQuantityTransaction changeQuantityTransaction = new ChangeQuantityTransaction(mealRepository);
+        return changeQuantityTransaction.execute(newQuantity, mealId, ingredientId);
+    }
+
 }
