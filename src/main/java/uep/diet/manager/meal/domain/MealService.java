@@ -8,10 +8,7 @@ import uep.diet.manager.ingredient.domain.IngredientNotFoundException;
 import uep.diet.manager.ingredient.domain.IngredientRepository;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
 import uep.diet.manager.ingredient.dto.IngredientMapper;
-import uep.diet.manager.meal.dto.MealCaloriesDTO;
-import uep.diet.manager.meal.dto.MealDTO;
-import uep.diet.manager.meal.dto.MealListDTO;
-import uep.diet.manager.meal.dto.MealMapper;
+import uep.diet.manager.meal.dto.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,9 +26,13 @@ public class MealService {
     private final IngredientRepository ingredientRepository;
 
     public MealDTO createMeal(MealDTO mealDTO) {
-        CreateMealTransaction createMealTransaction = new CreateMealTransaction();
-        Meal createdMeal = createMealTransaction.execute(mealDTO, mealRepository, ingredientRepository);
-        return MealMapper.toDTO(createdMeal);
+        CreateMealTransaction createMealTransaction = new CreateMealTransaction(mealDTO, mealRepository, ingredientRepository);
+        Meal createdMeal = createMealTransaction.execute();
+
+        UpdateMealTransaction updateMealTransaction = new UpdateMealTransaction();
+        Meal savedMeal = updateMealTransaction.execute(MealMapper.toDTO(createdMeal).getId(), mealRepository, ingredientRepository, MealMapper.toDTO(createdMeal));
+
+        return MealMapper.toDTO(savedMeal);
     }
 
     public void deleteMeal(Long id) {

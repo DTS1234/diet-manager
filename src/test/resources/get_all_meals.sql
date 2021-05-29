@@ -1,27 +1,26 @@
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
+DELETE
+FROM meal;
+DELETE
+FROM ingredient;
+DELETE
+FROM ingredient_meal;
 
-DELETE
-FROM MEAL;
-DELETE
-FROM INGREDIENT;
-DELETE
-FROM INGREDIENT_MEAL;
-
-INSERT INTO MEAL (meal_id, name)
+INSERT INTO meal (meal_id, name)
 VALUES (1, 'Spaghetti');
-INSERT INTO MEAL (meal_id, name)
+INSERT INTO meal (meal_id, name)
 VALUES (2, 'Pizza');
-INSERT INTO MEAL (meal_id, name)
+INSERT INTO meal (meal_id, name)
 VALUES (3, 'Beef Steak');
-INSERT INTO MEAL (meal_id, name)
+INSERT INTO meal (meal_id, name)
 VALUES (4, 'Tiramisu');
-INSERT INTO MEAL (meal_id, name)
+INSERT INTO meal (meal_id, name)
 VALUES (5, 'Pancakes');
 
-INSERT INTO INGREDIENT
+INSERT INTO ingredient
 VALUES (1, 12, 13, 14, 'name', 15);
 
-SET REFERENTIAL_INTEGRITY TRUE;
+SET FOREIGN_KEY_CHECKS=1;
 
-INSERT INTO INGREDIENT_MEAL
+INSERT INTO ingredient_meal
 VALUES (1, 1);

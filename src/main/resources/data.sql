@@ -1939,7 +1939,7 @@ VALUES (1096, 'PUDDINGS,CHOC FLAVOR,LO CAL,INST,DRY MIX', 356, 5, 78, 2);
 INSERT INTO ingredient(ingredient_id, name, calories_Per100g, protein, carbohydrates, fat)
 VALUES (1097, 'VITAL WHEAT GLUTEN', 370, 75, 13, 0);
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 INSERT INTO INGREDIENT_MEAL (INGREDIENT_ID, MEAL_ID)
 VALUES (1, 3);
 INSERT INTO INGREDIENT_MEAL (INGREDIENT_ID, MEAL_ID)
@@ -2007,5 +2007,4 @@ VALUES (3, 'email2@.com', 'Any', 'One', 'pass123', 'user3', 3200);
 INSERT INTO USER (user_id, email, first_name, last_name, password, username, day_limit)
 VALUES (4, 'email3@.com', 'No', 'One', 'pass123', 'user4', 2500);
 
-SET REFERENTIAL_INTEGRITY TRUE;
-
+SET FOREIGN_KEY_CHECKS=1;
