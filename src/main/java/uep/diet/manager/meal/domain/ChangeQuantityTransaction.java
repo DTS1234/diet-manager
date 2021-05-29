@@ -29,7 +29,8 @@ class ChangeQuantityTransaction {
 
         if (quantities.size() == ingredients.size())
         {
-            quantities.set(ingredientIndex, Quantity.of(newQuantity, meal));
+            Quantity newQuantityObject = setUpNewQuantity(newQuantity, meal, ingredientIndex);
+            quantities.set(ingredientIndex, newQuantityObject);
             meal.setQuantities(quantities);
             mealRepository.save(meal);
             return MealMapper.toDTO(meal);
@@ -49,6 +50,14 @@ class ChangeQuantityTransaction {
         }
 
         return MealMapper.toDTO(meal);
+    }
+
+    private Quantity setUpNewQuantity(Integer newQuantity, Meal meal, int ingredientIndex) {
+        Quantity q = new Quantity();
+        q.setQuantityId(meal.getQuantities().get(ingredientIndex).getQuantityId());
+        q.setGrams(newQuantity);
+        q.setMeal(meal);
+        return q;
     }
 
     private void adjustQuantitesToIngredients(Integer newQuantity, Meal meal, List<Ingredient> ingredients, int ingredientIndex, List<Quantity> quantities) {

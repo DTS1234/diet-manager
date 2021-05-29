@@ -15,8 +15,6 @@ public class QuantityDTO {
 
     @JsonIgnore
     private Long id;
-    @JsonIgnore
-    private MealDTO meal;
     private Integer quantity;
     private Long ingredientId;
 

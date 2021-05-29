@@ -2,15 +2,17 @@ package uep.diet.manager.meal.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import uep.diet.manager.ingredient.domain.Ingredient;
+import uep.diet.manager.ingredient.domain.IngredientNotFoundException;
 import uep.diet.manager.ingredient.domain.IngredientRepository;
-import uep.diet.manager.ingredient.domain.IngredientWrongParametersException;
+import uep.diet.manager.ingredient.dto.IngredientDTO;
 import uep.diet.manager.ingredient.dto.IngredientMapper;
 import uep.diet.manager.meal.dto.MealDTO;
+import uep.diet.manager.meal.dto.QuantityDTO;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 /**
  * @author akazmierczak
@@ -19,82 +21,93 @@ import java.util.stream.Collectors;
 @Slf4j
 class CreateMealTransaction {
 
-    public Meal execute(MealDTO mealDTO, MealRepository mealRepository, IngredientRepository ingredientRepository) {
+    private final MealDTO mealDTO;
+    private final MealRepository mealRepository;
+    private final IngredientRepository ingredientRepository;
+
+    public CreateMealTransaction(MealDTO mealDTO, MealRepository mealRepository, IngredientRepository ingredientRepository) {
+        this.mealDTO = mealDTO;
+        this.mealRepository = mealRepository;
+        this.ingredientRepository = ingredientRepository;
+    }
+
+    public Meal execute() {
+
+        List<QuantityDTO> passedQuantities = mealDTO.getQuantities() == null ? Collections.emptyList() : mealDTO.getQuantities();
+        List<IngredientDTO> passedIngredients = mealDTO.getIngredients() == null ? Collections.emptyList() : mealDTO.getIngredients();
+        String passedName = mealDTO.getName();
+        String passedImgLink = mealDTO.getImgLink() == null ? "" : mealDTO.getImgLink();
+        checkName(passedName);
+
         Meal mealToBeSaved = new Meal();
-        mealToBeSaved.setName(mealDTO.getName());
-        mealToBeSaved.setMealId(mealDTO.getId());
+        mealToBeSaved.setName(passedName);
+        mealToBeSaved.setImgLink(passedImgLink);
+        changeNullsForEmptyCollections(passedQuantities, passedIngredients, mealToBeSaved);
 
-        List<Ingredient> ingredientList = createIngredientsIfTheyNotExist(mealDTO, ingredientRepository);
+        List<Ingredient> existingIngredients = getExistingIngredientsByIds(passedIngredients);
+        List<Ingredient> newIngredients = getNewIngredientsFromDTOBody(passedIngredients);
 
-        log.info("Saving meal " + mealToBeSaved.toString());
-        Meal savedMeal = mealRepository.save(mealToBeSaved);
+        List<Ingredient> ingredientsToBeSaved = new ArrayList<>();
+        ingredientsToBeSaved.addAll(existingIngredients);
+        ingredientsToBeSaved.addAll(newIngredients);
 
-        log.info("Updating meal with ingredient data.");
-        updateMealForIngredients(savedMeal, ingredientList, mealRepository, ingredientRepository);
+        ingredientsToBeSaved.forEach(ingredientRepository::save);
+        mealToBeSaved.setIngredients(ingredientsToBeSaved);
 
-        return savedMeal;
+        return mealRepository.save(mealToBeSaved);
     }
 
-    private List<Ingredient> createIngredientsIfTheyNotExist(MealDTO meal, IngredientRepository ingredientRepository) {
+    private List<Ingredient> getNewIngredientsFromDTOBody(List<IngredientDTO> passedIngredients) {
 
-        if (meal.getIngredients() != null) {
-
-            List<Ingredient> ingredientList =
-                    meal.getIngredients().stream().map(IngredientMapper::toEntity).collect(Collectors.toList());
-
-            //save those that do not exist
-            ingredientList
-                    .stream()
-                    .filter(ingredient -> ingredient.getIngredientId() != null)
-                    .filter(ingredient -> !ingredientRepository.existsById(ingredient.getIngredientId()))
-                    .forEach(ingredient -> {
-
-                        boolean nameIsNullOrEmpty = ingredient.getName() == null || ingredient.getName().trim().equals("");
-
-                        if (nameIsNullOrEmpty) {
-                            throw new IngredientWrongParametersException("Newly created ingredient should at least have a name.");
-                        } else {
-                            log.info("Creating new ingredient for meal " + meal.getName() + " <-> " + ingredient.getName());
-                            ingredientRepository.save(ingredient);
-                        }
-
-                    });
-
-            return ingredientList;
+        if (passedIngredients.isEmpty()) {
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
+
+        List<Ingredient> newIngredients = new ArrayList<>();
+
+        passedIngredients.stream()
+                .filter(ingredient -> ingredient.getId() == null)
+                .forEach(ingredientDTO ->
+                        newIngredients.add(ingredientRepository.save(IngredientMapper.toEntity(ingredientDTO)))
+                );
+
+        return newIngredients;
     }
 
+    private List<Ingredient> getExistingIngredientsByIds(List<IngredientDTO> passedIngredients) {
 
-    private void updateMealForIngredients(Meal savedMeal, List<Ingredient> ingredients, MealRepository mealRepository, IngredientRepository ingredientRepository) {
-
-        // update meal first
-        if (ingredients == null){
-            savedMeal.setIngredients(Collections.emptyList());
-        } else {
-            savedMeal.setIngredients(ingredients);
+        if (passedIngredients.isEmpty()) {
+            return Collections.emptyList();
         }
 
-        mealRepository.save(savedMeal);
+        List<Ingredient> existingIngredients = new ArrayList<>();
 
-        // here update ingredients
-        if (ingredients == null)
-        {
-            ingredients = new ArrayList<>();//if null initialize empty list
+        passedIngredients.stream()
+                .map(IngredientDTO::getId)
+                .filter(Objects::nonNull)
+                .filter(ingredientRepository::existsById)
+                .forEach(id ->
+                        existingIngredients.add(ingredientRepository.findById(id).orElseThrow(IngredientNotFoundException::new))
+                );
+
+        log.info("Found following ingredients by id's " + existingIngredients);
+        return existingIngredients;
+    }
+
+    private void changeNullsForEmptyCollections(List<QuantityDTO> passedQuantities, List<IngredientDTO> passedIngredients, Meal mealToBeSaved) {
+        if (passedIngredients.isEmpty()) {
+            mealToBeSaved.setIngredients(Collections.emptyList());
         }
-        ingredients.forEach(ingredient ->
-        {
-            List<Meal> mealsWithIngredient = ingredient.getMeal();
-            if (mealsWithIngredient == null) // if meals null replace with empty list, then update
-            {
-                mealsWithIngredient = new ArrayList<>();
-            }
 
-            mealsWithIngredient.add(savedMeal);
-            ingredient.setMeal(mealsWithIngredient);
-            ingredientRepository.save(ingredient);
-        });
+        if (passedQuantities.isEmpty()) {
+            mealToBeSaved.setQuantities(Collections.emptyList());
+        }
+    }
 
+    private void checkName(String passedName) {
+        if (passedName == null || passedName.isEmpty()) {
+            throw new MealCreationException("Meal name cannot be empty !");
+        }
     }
 
 }

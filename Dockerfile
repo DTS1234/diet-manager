@@ -1,7 +1,11 @@
-FROM hypriot/rpi-java
+FROM java:8
 
-ADD diet-manager-0.0.1-SNAPSHOT.jar /opt/diet-manager-0.0.1-SNAPSHOT.jar
+VOLUME /tmp
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/opt/diet-manager-0.0.1-SNAPSHOT.jar"]
+ADD /build/libs/diet-manager-0.0.1-SNAPSHOT.jar diet-manager-0.0.1-SNAPSHOT.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "diet-manager-0.0.1-SNAPSHOT.jar"]
