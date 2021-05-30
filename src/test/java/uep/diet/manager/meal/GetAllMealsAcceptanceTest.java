@@ -38,6 +38,8 @@ class GetAllMealsAcceptanceTest {
         given()
                 .port(port)
                 .contentType("application/json")
+                .auth().preemptive().basic("adminUser", "pass123")
+
         .when()
                 .get("meal/all")
         .then()

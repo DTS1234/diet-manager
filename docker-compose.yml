@@ -10,7 +10,7 @@ services:
     ports:
     - 9999:3306
   app:
-    image: 9909733/diet-manager:0.0.1
+    image: 9909733/diet-manager
     depends_on:
       - docker-mysql
     ports:
@@ -20,4 +20,4 @@ services:
       - DATABASE_USER=root
       - DATABASE_PASSWORD=root
       - DATABASE_NAME=test
-      - DATABASE_PORT=3306
+      - DATABASE_PORT=9999

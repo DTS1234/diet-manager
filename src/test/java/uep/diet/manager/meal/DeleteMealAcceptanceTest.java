@@ -34,12 +34,14 @@ class DeleteMealAcceptanceTest {
     @Sql("/delete_meal_case.sql")
     void shouldDeleteExistingMealById() {
         given()
-            .port(port)
-            .contentType("application/json")
-        .when()
-            .delete("meal/1/delete")
-        .then()
-            .statusCode(200);
+                .port(port)
+                .contentType("application/json")
+                .auth().preemptive().basic("adminUser", "pass123")
+
+            .when()
+                .delete("meal/1/delete")
+            .then()
+                .statusCode(200);
 
         assertFalse(mealRepository.existsById(1L));
         assertTrue(mealRepository.existsById(2L));
