@@ -5,10 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import uep.diet.manager.ingredient.domain.IngredientRepository;
-import uep.diet.manager.meal.domain.MealRepository;
-import uep.diet.manager.meal.domain.MealService;
-import uep.diet.manager.meal.domain.UpdateMealFieldsException;
+import uep.diet.manager.ingredient.domain.data.IngredientRepository;
+import uep.diet.manager.meal.domain.data.MealRepository;
+import uep.diet.manager.meal.domain.service.MealService;
+import uep.diet.manager.meal.domain.exception.UpdateMealFieldsException;
 import uep.diet.manager.meal.dto.UpdateFieldsDTO;
 
 import java.util.*;

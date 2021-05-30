@@ -1,10 +1,10 @@
 package uep.diet.manager.meal.dto;
 
-import uep.diet.manager.ingredient.domain.Ingredient;
+import uep.diet.manager.ingredient.domain.data.Ingredient;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
 import uep.diet.manager.ingredient.dto.IngredientMapper;
-import uep.diet.manager.meal.domain.Meal;
-import uep.diet.manager.meal.domain.Quantity;
+import uep.diet.manager.meal.domain.data.Meal;
+import uep.diet.manager.meal.domain.data.Quantity;
 
 import java.util.ArrayList;
 import java.util.List;

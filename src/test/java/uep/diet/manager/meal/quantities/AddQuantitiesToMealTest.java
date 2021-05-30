@@ -4,10 +4,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import uep.diet.manager.ingredient.domain.IngredientNotFoundException;
-import uep.diet.manager.ingredient.domain.IngredientRepository;
+import uep.diet.manager.ingredient.domain.exception.IngredientNotFoundException;
+import uep.diet.manager.ingredient.domain.data.IngredientRepository;
 import uep.diet.manager.meal.TestMeal;
-import uep.diet.manager.meal.domain.*;
+import uep.diet.manager.meal.domain.data.Meal;
+import uep.diet.manager.meal.domain.data.MealRepository;
+import uep.diet.manager.meal.domain.data.Quantity;
+import uep.diet.manager.meal.domain.exception.MealNotFoundException;
+import uep.diet.manager.meal.domain.exception.QuantityException;
+import uep.diet.manager.meal.domain.service.MealService;
 import uep.diet.manager.meal.dto.MealDTO;
 import uep.diet.manager.meal.dto.QuantityDTO;
 

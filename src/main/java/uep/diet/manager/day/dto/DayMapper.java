@@ -1,8 +1,8 @@
 package uep.diet.manager.day.dto;
 
-import uep.diet.manager.day.domain.Day;
-import uep.diet.manager.day.domain.DayAddException;
-import uep.diet.manager.meal.domain.Meal;
+import uep.diet.manager.day.domain.data.Day;
+import uep.diet.manager.day.domain.exception.DayAddException;
+import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.dto.MealDTO;
 import uep.diet.manager.meal.dto.MealMapper;
 

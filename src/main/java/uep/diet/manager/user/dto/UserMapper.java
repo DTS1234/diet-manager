@@ -1,6 +1,6 @@
 package uep.diet.manager.user.dto;
 
-import uep.diet.manager.user.domain.User;
+import uep.diet.manager.user.domain.data.User;
 
 /**
  * @author akazmierczak

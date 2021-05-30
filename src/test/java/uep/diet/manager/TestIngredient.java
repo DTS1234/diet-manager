@@ -1,6 +1,6 @@
 package uep.diet.manager;
 
-import uep.diet.manager.ingredient.domain.Ingredient;
+import uep.diet.manager.ingredient.domain.data.Ingredient;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
 
 /**

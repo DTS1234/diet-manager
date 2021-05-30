@@ -2,7 +2,7 @@ package uep.diet.manager.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import uep.diet.manager.day.domain.Day;
+import uep.diet.manager.day.domain.data.Day;
 
 import java.util.List;
 

@@ -3,14 +3,13 @@ package uep.diet.manager.meal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import uep.diet.manager.TestIngredient;
-import uep.diet.manager.ingredient.domain.IngredientRepository;
-import uep.diet.manager.meal.domain.Meal;
-import uep.diet.manager.meal.domain.MealRepository;
-import uep.diet.manager.meal.domain.MealService;
-import uep.diet.manager.meal.domain.Quantity;
+import uep.diet.manager.ingredient.domain.data.IngredientRepository;
+import uep.diet.manager.meal.domain.data.Meal;
+import uep.diet.manager.meal.domain.data.MealRepository;
+import uep.diet.manager.meal.domain.service.MealService;
+import uep.diet.manager.meal.domain.data.Quantity;
 import uep.diet.manager.meal.dto.MealDTO;
 import uep.diet.manager.meal.dto.MealMapper;
 
@@ -19,7 +18,6 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.hamcrest.Matchers.isA;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

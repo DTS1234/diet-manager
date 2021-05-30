@@ -1,8 +1,8 @@
 package uep.diet.manager.meal;
 
 import uep.diet.manager.TestIngredient;
-import uep.diet.manager.meal.domain.Meal;
-import uep.diet.manager.meal.domain.Quantity;
+import uep.diet.manager.meal.domain.data.Meal;
+import uep.diet.manager.meal.domain.data.Quantity;
 import uep.diet.manager.meal.dto.MealDTO;
 
 import java.util.Arrays;
