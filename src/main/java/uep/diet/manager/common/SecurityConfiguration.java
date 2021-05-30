@@ -1,14 +1,18 @@
 package uep.diet.manager.common;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import javax.sql.DataSource;
 
 /**
  * @author akazmierczak
@@ -16,45 +20,49 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
  */
 @Configuration
 @Slf4j
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    public static final String ADMIN = "ADMIN";
+    public static final String MANAGER = "MANAGER";
+    public static final String NORMAL = "NORMAL";
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http
-                .csrf()
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-
-                .and()
-
-                .authorizeRequests()
+        http.authorizeRequests(a -> a.mvcMatchers(HttpMethod.GET, "/ingredient/*", "/meal/*")
+                .hasAnyAuthority(NORMAL, MANAGER, ADMIN)
+                .mvcMatchers(HttpMethod.GET, "/users/all").hasAnyAuthority(
+                        ADMIN, MANAGER)
                 .anyRequest()
-                    .permitAll()
+                .hasAnyAuthority(NORMAL, ADMIN, MANAGER)).httpBasic();
 
-                .and()
-
-                .formLogin()
-                .loginProcessingUrl("/login")
-
-                .and()
-
-                .httpBasic();
-
-      log.info("no security set up");
+        http.csrf().disable();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        auth.inMemoryAuthentication()
-                .withUser("steve")
-                .password(encoder.encode("password")).roles("ADMIN");
-    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/css/**", "/webjars/**", "/meal/**",
-                "/ingredient/**", "/h2-console/**", "**/**", "/users/**", "/user/**");
+        web.ignoring().antMatchers(
+                "/v2/api-docs",
+                "/swagger-resources",
+                "/swagger-resources/**",
+                "/configuration/ui",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**",
+                // -- Swagger UI v3 (OpenAPI)
+                "/v3/api-docs/**",
+                "/swagger-ui/**");
     }
 
 

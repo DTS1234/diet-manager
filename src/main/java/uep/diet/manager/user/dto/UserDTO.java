@@ -21,5 +21,6 @@ public class UserDTO {
     private Integer kcalDayLimit;
     @JsonIgnore
     private List<Day> days;
+    private Boolean enabled;
 
 }

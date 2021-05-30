@@ -22,6 +22,5 @@ public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .hasRole("ADMIN")
                 .and()
                 .httpBasic();
-
     }
 }
