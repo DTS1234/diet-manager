@@ -66,7 +66,6 @@ class RemoveMealFromUsersDayTransaction {
                 .collect(Collectors.toList()).get(0);
     }
 
-
 }
 
 
