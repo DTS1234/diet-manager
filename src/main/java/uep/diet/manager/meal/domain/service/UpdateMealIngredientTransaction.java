@@ -29,7 +29,10 @@ class UpdateMealIngredientTransaction {
     private final UpdateIngredientsDTO body;
 
 
-    public UpdateMealIngredientTransaction(IngredientRepository ingredientRepository, MealRepository mealRepository, Long mealId, UpdateIngredientsDTO body) {
+    public UpdateMealIngredientTransaction(IngredientRepository ingredientRepository,
+                                           MealRepository mealRepository,
+                                           Long mealId,
+                                           UpdateIngredientsDTO body) {
         this.ingredientRepository = ingredientRepository;
         this.mealRepository = mealRepository;
         this.mealId = mealId;

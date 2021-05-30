@@ -11,7 +11,7 @@ import uep.diet.manager.day.domain.exception.DayNotFoundException;
 import uep.diet.manager.day.domain.exception.RemoveMealFromUsersDayException;
 import uep.diet.manager.ingredient.domain.exception.IngredientNotFoundException;
 import uep.diet.manager.ingredient.domain.exception.IngredientWrongParametersException;
-import uep.diet.manager.meal.domain.exception.MealNotFoundException;
+import uep.diet.manager.meal.domain.exception.*;
 import uep.diet.manager.user.domain.exception.UserNotFoundException;
 
 /**
@@ -63,12 +63,15 @@ public class ErrorHandler {
         return new ResponseEntity<>(exception.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({RemoveMealFromUsersDayException.class})
+    @ExceptionHandler({RemoveMealFromUsersDayException.class,
+            QuantityException.class,
+            UpdateIngredientsException.class,
+            UpdateMealFieldsException.class,
+            MealCreationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Object> handleRemoveMealFromUserSDayException(Exception exception)
+    public ResponseEntity<Object> handleMealExceptions(Exception exception)
     {
         return new ResponseEntity<>(exception.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
-
 
 }

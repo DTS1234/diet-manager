@@ -23,8 +23,8 @@ public class Day {
     @ManyToMany
     @JoinTable(
             name = "day_meal",
-            joinColumns = @JoinColumn(name = "dayId"),
-            inverseJoinColumns = @JoinColumn(name = "mealId"))
+            joinColumns = @JoinColumn(name = "day_id"),
+            inverseJoinColumns = @JoinColumn(name = "meal_id"))
     private List<Meal> meals;
 
 }

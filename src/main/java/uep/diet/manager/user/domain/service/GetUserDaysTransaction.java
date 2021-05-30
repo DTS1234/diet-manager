@@ -4,13 +4,12 @@ import uep.diet.manager.day.domain.data.Day;
 import uep.diet.manager.day.dto.DayDTO;
 import uep.diet.manager.day.dto.DayMapper;
 import uep.diet.manager.user.domain.data.User;
-import uep.diet.manager.user.domain.exception.UserNotFoundException;
 import uep.diet.manager.user.domain.data.UserRepository;
+import uep.diet.manager.user.domain.exception.UserNotFoundException;
 import uep.diet.manager.user.dto.UserDaysDTO;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -19,41 +18,29 @@ import java.util.stream.Collectors;
  */
 class GetUserDaysTransaction {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public GetUserDaysTransaction(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public UserDaysDTO execute(Long id)
-    {
-        Optional<User> userOptional = userRepository.findById(id);
+    public UserDaysDTO execute(Long id) {
+        User userFound = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id equal to " + id + " was not found."));
         UserDaysDTO userDaysDTO = new UserDaysDTO();
 
-        if (userOptional.isPresent()) {
+        userDaysDTO.setUsername(userFound.getUsername());
+        userDaysDTO.setId(userFound.getUserId());
 
-            User userFound = userOptional.get();
-            userDaysDTO.setUsername(userFound.getUsername());
-            userDaysDTO.setId(userFound.getUserId());
+        boolean userHaveSomeDaysAlready = userFound.getDays() != null && !userFound.getDays().isEmpty();
 
-            boolean userHaveSomeDaysAlready = userFound.getDays() != null && !userFound.getDays().isEmpty();
+        if (userHaveSomeDaysAlready) {
 
-            if (userHaveSomeDaysAlready) {
-
-                List<Day> days = userFound.getDays();
-                List<DayDTO> dayDTOS = days.stream().map(DayMapper::toDTO).collect(Collectors.toList());
-
-
-                userDaysDTO.setDays(dayDTOS);
-                return userDaysDTO;
-            }
-
-            userDaysDTO.setDays(Collections.emptyList());
+            List<Day> days = userFound.getDays();
+            List<DayDTO> dayDTOS = days.stream().map(DayMapper::toDTO).collect(Collectors.toList());
+            userDaysDTO.setDays(dayDTOS);
             return userDaysDTO;
-
-        } else {
-            throw new UserNotFoundException("User with id equal to " + id + " was not found.");
         }
+        userDaysDTO.setDays(Collections.emptyList());
+        return userDaysDTO;
     }
-
 }
