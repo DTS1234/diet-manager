@@ -44,13 +44,12 @@ public class TestQuantities {
         return quantities;
     }
 
-    public static List<QuantityDTO> quantitesForMeal(Meal meal, int ...quantites) {
+    public static List<QuantityDTO> quantitesDTOForMeal(Meal meal, int ...quantites) {
 
         List<Ingredient> ingredients = meal.getIngredients();
         List<QuantityDTO> quantityDTOS = new ArrayList<>();
 
         for (int i = 0; i < ingredients.size(); i++) {
-
             QuantityDTO quantityDTO = new QuantityDTO();
             quantityDTO.setQuantity(quantites[i]);
             quantityDTO.setIngredientId(ingredients.get(i).getIngredientId());

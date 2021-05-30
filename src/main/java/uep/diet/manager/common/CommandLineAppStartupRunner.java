@@ -5,8 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import uep.diet.manager.ingredient.domain.Ingredient;
+import uep.diet.manager.ingredient.domain.IngredientRepository;
 import uep.diet.manager.user.domain.User;
 import uep.diet.manager.user.domain.UserRepository;
+
+import java.util.List;
 
 /**
  * @date 29.05.2021
@@ -18,9 +22,13 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final IngredientRepository ingredientRepository;
 
     @Override
     public void run(String... args) throws Exception {
+
+        List<Ingredient> all = ingredientRepository.findAll();
+
 
         if (!userRepository.existsById(1L)){
             User user = new User();
@@ -58,11 +66,17 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             user.setEmail("manageruser@gmail.com");
             user.setPassword(this.passwordEncoder.encode("pass123"));
             user.setUsername("managerUser");
-            user.addAuthority("NORMAL");
+            user.addAuthority("MANAGER");
             userRepository.save(user);
 
             log.info("SAVED manager user !");
         }
 
     }
+
+    private int findFirstCommaIndex(String string)
+    {
+        return string.indexOf(',') == -1 ? string.length()-1 : string.indexOf(',');
+    }
+
 }

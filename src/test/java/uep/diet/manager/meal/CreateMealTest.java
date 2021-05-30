@@ -67,6 +67,7 @@ class CreateMealTest {
         expected.setQuantities(Collections.emptyList());
         expected.setName("some-name");
         expected.setImgLink("img link");
+        expected.setMealType("");
         expected.setId(1L);
 
         //then

@@ -2,6 +2,7 @@ package uep.diet.manager.meal;
 
 import uep.diet.manager.TestIngredient;
 import uep.diet.manager.meal.domain.Meal;
+import uep.diet.manager.meal.domain.Quantity;
 import uep.diet.manager.meal.dto.MealDTO;
 
 import java.util.Arrays;
@@ -19,6 +20,15 @@ public class TestMeal extends Meal {
         meal.setIngredients(Arrays.asList(
                 TestIngredient.basicWithName("Test 1"),
                 TestIngredient.basicWithName("Test 2")));
+
+        return meal;
+    }
+
+    public static Meal basicWith(String name, String imgLink, String mealType) {
+        Meal meal = new Meal();
+        meal.setName(name);
+        meal.setMealType(mealType);
+        meal.setImgLink(imgLink);
 
         return meal;
     }
@@ -55,6 +65,21 @@ public class TestMeal extends Meal {
         meal.setIngredients(Arrays.asList(
                 TestIngredient.basicWithIdDTO(1L),
                 TestIngredient.basicWithIdDTO(2L)));
+
+        return meal;
+    }
+
+    public static Meal withQuantities(Integer ...quantities) {
+        Meal meal = new Meal();
+        meal.setName("Pancakes");
+        meal.setIngredients(Arrays.asList(
+                TestIngredient.basicWithId(1L),
+                TestIngredient.basicWithId(2L)));
+        meal.setQuantities(Arrays.asList(
+                Quantity.of(1L, quantities[0], meal),
+                Quantity.of(2L, quantities[1], meal)
+        ));
+        meal.setMealId(1L);
 
         return meal;
     }

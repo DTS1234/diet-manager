@@ -18,4 +18,13 @@ public class QuantityDTO {
     private Integer quantity;
     private Long ingredientId;
 
+    public static QuantityDTO of(Long id, Integer quantity, Long ingredientId)
+    {
+        QuantityDTO quantityDTO = new QuantityDTO();
+        quantityDTO.setQuantity(quantity);
+        quantityDTO.setIngredientId(ingredientId);
+        quantityDTO.setId(id);
+        return quantityDTO;
+    }
+
 }

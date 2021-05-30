@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import uep.diet.manager.meal.domain.MealService;
-import uep.diet.manager.meal.dto.MealCaloriesDTO;
-import uep.diet.manager.meal.dto.MealDTO;
-import uep.diet.manager.meal.dto.MealListDTO;
+import uep.diet.manager.meal.dto.*;
 
 /**
  * @author akazmierczak
@@ -74,6 +72,18 @@ public class MealController {
                                            @PathVariable Long ingredientId,
                                            @PathVariable Integer quantity) {
         return mealService.changeQuantityForIngredientInMeal(quantity, mealId, ingredientId);
+    }
+
+    @PatchMapping("/{mealId}/updateIngredients/")
+    public UpdateIngredientsDTO updateIngredients(@PathVariable Long mealId, @RequestBody UpdateIngredientsDTO body)
+    {
+        return mealService.updateMealIngredients(body, mealId);
+    }
+
+    @PatchMapping("/{mealId}/updateFields/")
+    public UpdateFieldsDTO updateMealFields(@PathVariable Long mealId, @RequestBody UpdateFieldsDTO body)
+    {
+        return mealService.updateMealFields(body, mealId);
     }
 
 }
