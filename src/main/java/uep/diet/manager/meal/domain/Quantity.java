@@ -26,4 +26,12 @@ public class Quantity {
         quantity.setMeal(meal);
         return quantity;
     }
+
+    public static Quantity of(Long id, Integer grams, Meal meal){
+        Quantity quantity = new Quantity();
+        quantity.setGrams(grams);
+        quantity.setQuantityId(id);
+        quantity.setMeal(meal);
+        return quantity;
+    }
 }

@@ -122,4 +122,32 @@ public class MealService {
         return changeQuantityTransaction.execute(newQuantity, mealId, ingredientId);
     }
 
+    public UpdateIngredientsDTO updateMealIngredients(UpdateIngredientsDTO body,
+                                                      Long mealId) {
+        UpdateMealIngredientTransaction updateMealIngredientTransaction =
+                new UpdateMealIngredientTransaction(ingredientRepository, mealRepository, mealId, body);
+
+        return updateMealIngredientTransaction.execute();
+    }
+
+    public UpdateFieldsDTO updateMealFields(UpdateFieldsDTO updateFieldsDTO, Long mealId) {
+
+        String mealType = updateFieldsDTO.getMealType();
+        String imgLink = updateFieldsDTO.getImgLink();
+        String name = updateFieldsDTO.getName();
+
+        if (name == null || mealType == null || imgLink == null){
+            throw new UpdateMealFieldsException("All fields are required !");
+        }
+
+        Meal mealFound = mealRepository.findById(mealId).orElseThrow(MealNotFoundException::new);
+
+        mealFound.setMealType(mealType);
+        mealFound.setImgLink(imgLink);
+        mealFound.setName(name);
+
+        Meal mealSaved = mealRepository.save(mealFound);
+
+        return new UpdateFieldsDTO(mealSaved.getName(), mealSaved.getImgLink(), mealSaved.getMealType());
+    }
 }

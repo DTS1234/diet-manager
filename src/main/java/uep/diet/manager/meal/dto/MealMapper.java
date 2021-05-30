@@ -23,11 +23,13 @@ public class MealMapper {
         Long id = meal.getMealId();
         String imgLink = meal.getImgLink();
         List<Quantity> quantities = meal.getQuantities() == null ? new ArrayList<>() : meal.getQuantities();
+        String mealType= meal.getMealType() == null ? "" : meal.getMealType();
 
         MealDTO mealDTO = new MealDTO();
         mealDTO.setId(id);
         mealDTO.setName(name);
         mealDTO.setImgLink(imgLink);
+        mealDTO.setMealType(mealType);
 
         if (ingredientList != null && !ingredientList.isEmpty()) {
             // if ingredients exists set them up

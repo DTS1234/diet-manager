@@ -2,8 +2,6 @@ package uep.diet.manager.meal;
 
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 import uep.diet.manager.TestIngredient;
@@ -96,7 +94,7 @@ class MealMapperTest {
                 TestIngredient.basicWithIdDTO(2L)));
 
         assertThat(actual.getQuantities())
-                .isEqualTo(TestQuantities.quantitesForMeal(meal, 10, 12));
+                .isEqualTo(TestQuantities.quantitesDTOForMeal(meal, 10, 12));
 
     }
 
@@ -121,7 +119,7 @@ class MealMapperTest {
                 TestIngredient.basicWithIdDTO(2L)));
 
         assertThat(actual.getQuantities())
-                .isEqualTo(TestQuantities.quantitesForMeal(meal, 10, 0));
+                .isEqualTo(TestQuantities.quantitesDTOForMeal(meal, 10, 0));
 
     }
 
@@ -144,7 +142,7 @@ class MealMapperTest {
                 TestIngredient.basicWithIdDTO(1L)));
 
         assertThat(actual.getQuantities())
-                .isEqualTo(TestQuantities.quantitesForMeal(meal, 34));
+                .isEqualTo(TestQuantities.quantitesDTOForMeal(meal, 34));
 
     }
 

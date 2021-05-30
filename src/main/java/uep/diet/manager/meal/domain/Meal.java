@@ -24,6 +24,7 @@ public class Meal {
     private Long mealId;
     private String name;
     private String imgLink;
+    private String mealType;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "meal")
     private List<Ingredient> ingredients;
