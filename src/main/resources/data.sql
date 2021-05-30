@@ -1998,13 +1998,5 @@ VALUES (8, 567);
 INSERT INTO INGREDIENT_MEAL (INGREDIENT_ID, MEAL_ID)
 VALUES (9, 432);
 
-INSERT INTO USER (user_id, email, first_name, last_name, password, username, day_limit)
-VALUES (1, 'email.some.mail@.com', 'John', 'Doe', 'pass123', 'user1', 2670);
-INSERT INTO USER (user_id, email, first_name, last_name, password, username, day_limit)
-VALUES (2, 'email1@.com', 'Some', 'One', 'pass123', 'user2', 1550);
-INSERT INTO USER (user_id, email, first_name, last_name, password, username, day_limit)
-VALUES (3, 'email2@.com', 'Any', 'One', 'pass123', 'user3', 3200);
-INSERT INTO USER (user_id, email, first_name, last_name, password, username, day_limit)
-VALUES (4, 'email3@.com', 'No', 'One', 'pass123', 'user4', 2500);
 
 SET FOREIGN_KEY_CHECKS=1;

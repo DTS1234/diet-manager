@@ -50,7 +50,7 @@ class CreateMealAcceptanceTest {
         given()
                 .port(port)
                 .contentType("application/json")
-                .auth().preemptive().basic("steve", "password")
+                .auth().preemptive().basic("adminUser", "pass123")
                 .body(anyValidMeal)
                 .when()
                 .post("meal/create")

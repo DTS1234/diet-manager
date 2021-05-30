@@ -27,10 +27,10 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
             user.setUserId(1L);
             user.setDayLimit(2700);
-            user.setEmail("myEmalsth.com");
+            user.setEmail("adminuser@gmail.com");
             user.setPassword(this.passwordEncoder.encode("pass123"));
             user.setUsername("adminUser");
-            user.addAuthority("READ");
+            user.addAuthority("ADMIN");
             userRepository.save(user);
 
             log.info("SAVED admin user !");
@@ -44,13 +44,25 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             user.setEmail("normaluser@gmail.com");
             user.setPassword(this.passwordEncoder.encode("pass123"));
             user.setUsername("normalUser");
-            user.addAuthority("READ");
+            user.addAuthority("NORMAL");
             userRepository.save(user);
 
             log.info("SAVED normal user !");
         }
 
-        log.info("admin user already exists !");
+        if (!userRepository.existsById(3L)){
+            User user = new User();
+
+            user.setUserId(3L);
+            user.setDayLimit(2000);
+            user.setEmail("manageruser@gmail.com");
+            user.setPassword(this.passwordEncoder.encode("pass123"));
+            user.setUsername("managerUser");
+            user.addAuthority("NORMAL");
+            userRepository.save(user);
+
+            log.info("SAVED manager user !");
+        }
 
     }
 }

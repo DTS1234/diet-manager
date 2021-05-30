@@ -66,7 +66,7 @@ class CreateMealTransaction {
         List<Ingredient> newIngredients = new ArrayList<>();
 
         passedIngredients.stream()
-                .filter(ingredient -> ingredient.getId() == null)
+                .filter(ingredient -> ingredient.getId() == null || !ingredientRepository.existsById(ingredient.getId()))
                 .forEach(ingredientDTO ->
                         newIngredients.add(ingredientRepository.save(IngredientMapper.toEntity(ingredientDTO)))
                 );

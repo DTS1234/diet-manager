@@ -61,6 +61,8 @@ class UpdateMealAcceptanceTest {
             .port(port)
             .contentType("application/json")
             .body(anyValidMeal)
+            .auth().preemptive().basic("adminUser", "pass123")
+
         .when()
             .patch("meal/1/update")
         .then()
