@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import uep.diet.manager.user.domain.UserService;
+import uep.diet.manager.user.domain.service.UserService;
 import uep.diet.manager.user.dto.UserDTO;
 import uep.diet.manager.user.dto.UserDTOList;
 import uep.diet.manager.user.dto.UserDaysDTO;

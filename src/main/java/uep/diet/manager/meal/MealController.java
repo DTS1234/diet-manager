@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import uep.diet.manager.meal.domain.MealService;
+import uep.diet.manager.meal.domain.service.MealService;
 import uep.diet.manager.meal.dto.*;
 
 /**

@@ -1,7 +1,6 @@
 package uep.diet.manager.meal.dto;
 
 import lombok.Data;
-import uep.diet.manager.meal.domain.Meal;
 
 import java.util.List;
 

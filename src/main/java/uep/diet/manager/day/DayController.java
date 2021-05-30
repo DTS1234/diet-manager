@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import uep.diet.manager.day.domain.DayService;
+import uep.diet.manager.day.domain.service.DayService;
 import uep.diet.manager.day.dto.DayDTO;
 
 /**

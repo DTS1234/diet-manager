@@ -1,8 +1,6 @@
 package uep.diet.manager.meal;
 
 import groovy.util.logging.Slf4j;
-import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-import uep.diet.manager.meal.domain.MealRepository;
+import uep.diet.manager.meal.domain.data.MealRepository;
 
 import static io.restassured.RestAssured.*;
 

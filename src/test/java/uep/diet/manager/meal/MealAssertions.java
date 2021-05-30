@@ -2,7 +2,7 @@ package uep.diet.manager.meal;
 
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
-import uep.diet.manager.meal.domain.Meal;
+import uep.diet.manager.meal.domain.data.Meal;
 
 /**
  * @author akazmierczak

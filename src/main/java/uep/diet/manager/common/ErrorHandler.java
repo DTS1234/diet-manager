@@ -6,13 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import uep.diet.manager.day.domain.DayAddException;
-import uep.diet.manager.day.domain.DayNotFoundException;
-import uep.diet.manager.day.domain.RemoveMealFromUsersDayException;
-import uep.diet.manager.ingredient.domain.IngredientNotFoundException;
-import uep.diet.manager.ingredient.domain.IngredientWrongParametersException;
-import uep.diet.manager.meal.domain.MealNotFoundException;
-import uep.diet.manager.user.domain.UserNotFoundException;
+import uep.diet.manager.day.domain.exception.DayAddException;
+import uep.diet.manager.day.domain.exception.DayNotFoundException;
+import uep.diet.manager.day.domain.exception.RemoveMealFromUsersDayException;
+import uep.diet.manager.ingredient.domain.exception.IngredientNotFoundException;
+import uep.diet.manager.ingredient.domain.exception.IngredientWrongParametersException;
+import uep.diet.manager.meal.domain.exception.MealNotFoundException;
+import uep.diet.manager.user.domain.exception.UserNotFoundException;
 
 /**
  * @author akazmierczak

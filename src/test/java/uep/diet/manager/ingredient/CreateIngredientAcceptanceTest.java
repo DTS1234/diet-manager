@@ -10,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import uep.diet.manager.TestIngredient;
-import uep.diet.manager.ingredient.domain.Ingredient;
-import uep.diet.manager.ingredient.domain.IngredientRepository;
+import uep.diet.manager.ingredient.domain.data.Ingredient;
+import uep.diet.manager.ingredient.domain.data.IngredientRepository;
 
 import java.util.Optional;
 

@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import uep.diet.manager.TestIngredient;
-import uep.diet.manager.ingredient.domain.Ingredient;
-import uep.diet.manager.meal.domain.Meal;
-import uep.diet.manager.meal.domain.Quantity;
+import uep.diet.manager.ingredient.domain.data.Ingredient;
+import uep.diet.manager.meal.domain.data.Meal;
+import uep.diet.manager.meal.domain.data.Quantity;
 import uep.diet.manager.meal.dto.MealDTO;
 import uep.diet.manager.meal.dto.MealMapper;
 import uep.diet.manager.meal.quantities.TestQuantities;

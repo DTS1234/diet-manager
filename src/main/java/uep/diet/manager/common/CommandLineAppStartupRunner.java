@@ -5,12 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import uep.diet.manager.ingredient.domain.Ingredient;
-import uep.diet.manager.ingredient.domain.IngredientRepository;
-import uep.diet.manager.user.domain.User;
-import uep.diet.manager.user.domain.UserRepository;
-
-import java.util.List;
+import uep.diet.manager.user.domain.data.User;
+import uep.diet.manager.user.domain.data.UserRepository;
 
 /**
  * @date 29.05.2021
@@ -20,15 +16,12 @@ import java.util.List;
 @Slf4j
 public class CommandLineAppStartupRunner implements CommandLineRunner {
 
+    public static final String PASSWORD = "pass123";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final IngredientRepository ingredientRepository;
 
     @Override
-    public void run(String... args) throws Exception {
-
-        List<Ingredient> all = ingredientRepository.findAll();
-
+    public void run(String... args) {
 
         if (!userRepository.existsById(1L)){
             User user = new User();
@@ -36,7 +29,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             user.setUserId(1L);
             user.setDayLimit(2700);
             user.setEmail("adminuser@gmail.com");
-            user.setPassword(this.passwordEncoder.encode("pass123"));
+            user.setPassword(this.passwordEncoder.encode(PASSWORD));
             user.setUsername("adminUser");
             user.addAuthority("ADMIN");
             userRepository.save(user);
@@ -50,7 +43,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             user.setUserId(2L);
             user.setDayLimit(2830);
             user.setEmail("normaluser@gmail.com");
-            user.setPassword(this.passwordEncoder.encode("pass123"));
+            user.setPassword(this.passwordEncoder.encode(PASSWORD));
             user.setUsername("normalUser");
             user.addAuthority("NORMAL");
             userRepository.save(user);
@@ -64,7 +57,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             user.setUserId(3L);
             user.setDayLimit(2000);
             user.setEmail("manageruser@gmail.com");
-            user.setPassword(this.passwordEncoder.encode("pass123"));
+            user.setPassword(this.passwordEncoder.encode(PASSWORD));
             user.setUsername("managerUser");
             user.addAuthority("MANAGER");
             userRepository.save(user);
@@ -73,10 +66,4 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
         }
 
     }
-
-    private int findFirstCommaIndex(String string)
-    {
-        return string.indexOf(',') == -1 ? string.length()-1 : string.indexOf(',');
-    }
-
 }
