@@ -18,6 +18,7 @@ public class UserMapper {
         String email = user.getEmail();
         Long id = user.getUserId();
         Integer kcalLimit = user.getDayLimit();
+        Boolean enabled = user.getEnabled();
 
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(email);
@@ -26,6 +27,7 @@ public class UserMapper {
         userDTO.setUserId(id);
         userDTO.setUsername(userName);
         userDTO.setKcalDayLimit(kcalLimit);
+        userDTO.setEnabled(enabled);
 
         return userDTO;
     }
