@@ -45,8 +45,8 @@ class UpdateMealIngredientsTest {
     void shouldReturnEmpty_whenEmptyIngredientsPassed() {
         // given
         UpdateIngredientsDTO body = new UpdateIngredientsDTO();
-        body.setIngredientDTOList(new ArrayList<>());
-        body.setQuantityListDTO(new ArrayList<>());
+        body.setIngredients(new ArrayList<>());
+        body.setQuantities(new ArrayList<>());
         when(ingredientRepository.save(any())).thenReturn(new Ingredient());
         when(mealRepository.findById(isA(Long.class))).thenReturn(Optional.of(TestMeal.basic()));
         when(ingredientRepository.findByMeal(any())).thenReturn(Optional.of(Arrays.asList(TestIngredient.basicWithId(1L))));
@@ -54,8 +54,8 @@ class UpdateMealIngredientsTest {
         // when
         UpdateIngredientsDTO actual = subject.updateMealIngredients(body, 1L);
         // then
-        assertThat(actual.getIngredientDTOList()).isNotNull();
-        assertThat(actual.getIngredientDTOList()).isEmpty();
+        assertThat(actual.getIngredients()).isNotNull();
+        assertThat(actual.getIngredients()).isEmpty();
     }
 
     @Test
@@ -67,8 +67,8 @@ class UpdateMealIngredientsTest {
         TestQuantities.defaultQuantitiesDTOList(Arrays.asList(1L, 2L));
 
         UpdateIngredientsDTO body = new UpdateIngredientsDTO();
-        body.setIngredientDTOList(ingredients);
-        body.setQuantityListDTO(TestQuantities.defaultQuantitiesDTOList(Arrays.asList(1L, 2L)));
+        body.setIngredients(ingredients);
+        body.setQuantities(TestQuantities.defaultQuantitiesDTOList(Arrays.asList(1L, 2L)));
 
         when(ingredientRepository.save(isA(Ingredient.class))).thenReturn(TestIngredient.basicWithId(1L), TestIngredient.basicWithId(2L));
         when(mealRepository.save(isA(Meal.class))).thenReturn(TestMeal.withQuantities(10, 24));
@@ -79,7 +79,7 @@ class UpdateMealIngredientsTest {
         UpdateIngredientsDTO actual = subject.updateMealIngredients(body, 1L);
         // then
         List<IngredientDTO> expected = Arrays.asList(TestIngredient.basicWithIdDTO(1L), TestIngredient.basicWithIdDTO(2L));
-        assertThat(actual.getIngredientDTOList())
+        assertThat(actual.getIngredients())
                 .isEqualTo(expected);
     }
 
@@ -92,8 +92,8 @@ class UpdateMealIngredientsTest {
         List<QuantityDTO> passedQuantities = TestQuantities.quantitesDTOForMeal(TestMeal.basic(), 10, 24);
 
         UpdateIngredientsDTO body = new UpdateIngredientsDTO();
-        body.setIngredientDTOList(passedIngredients);
-        body.setQuantityListDTO(passedQuantities);
+        body.setIngredients(passedIngredients);
+        body.setQuantities(passedQuantities);
 
         when(ingredientRepository.save(isA(Ingredient.class))).thenReturn(TestIngredient.basicWithId(1L), TestIngredient.basicWithId(2L));
         when(mealRepository.save(isA(Meal.class))).thenReturn(TestMeal.withQuantities(10, 24));
@@ -110,9 +110,9 @@ class UpdateMealIngredientsTest {
                 QuantityDTO.of(1L, 10, 1L),
                 QuantityDTO.of(2L, 24, 2L));
 
-        assertThat(actual.getQuantityListDTO())
+        assertThat(actual.getQuantities())
                 .isEqualTo(expectedQuantities);
-        assertThat(actual.getIngredientDTOList())
+        assertThat(actual.getIngredients())
                 .isEqualTo(expectedIngredients);
     }
 
@@ -127,8 +127,8 @@ class UpdateMealIngredientsTest {
         List<QuantityDTO> newQuantities = Collections.singletonList(QuantityDTO.of(1L, 10, 1L));
 
         UpdateIngredientsDTO body = new UpdateIngredientsDTO();
-        body.setIngredientDTOList(passedIngredients);
-        body.setQuantityListDTO(newQuantities);
+        body.setIngredients(passedIngredients);
+        body.setQuantities(newQuantities);
         // when
         AbstractThrowableAssert<?, ? extends Throwable> actual = assertThatThrownBy(() -> subject.updateMealIngredients(body, 1L));
         // then

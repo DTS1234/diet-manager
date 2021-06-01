@@ -40,8 +40,8 @@ class UpdateMealIngredientTransaction {
     }
 
     UpdateIngredientsDTO execute() {
-        List<IngredientDTO> passedIngredients = body.getIngredientDTOList() == null ? new ArrayList<>() : body.getIngredientDTOList();
-        List<QuantityDTO> passedQuantities = body.getQuantityListDTO() == null ? new ArrayList<>() : body.getQuantityListDTO();
+        List<IngredientDTO> passedIngredients = body.getIngredients() == null ? new ArrayList<>() : body.getIngredients();
+        List<QuantityDTO> passedQuantities = body.getQuantities() == null ? new ArrayList<>() : body.getQuantities();
 
         if (passedIngredients.size() != passedQuantities.size()) {
             throw new UpdateIngredientsException("Quantities should have same size as ingredients!");
@@ -55,8 +55,8 @@ class UpdateMealIngredientTransaction {
         setQuantities(passedQuantities, newQuantities);
 
         UpdateIngredientsDTO result = new UpdateIngredientsDTO();
-        result.setIngredientDTOList(newIngredients);
-        result.setQuantityListDTO(newQuantities);
+        result.setIngredients(newIngredients);
+        result.setQuantities(newQuantities);
 
         return result;
     }
