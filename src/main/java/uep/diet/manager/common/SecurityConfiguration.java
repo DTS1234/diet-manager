@@ -22,16 +22,11 @@ import javax.sql.DataSource;
  */
 @Configuration
 @Slf4j
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     public static final String ADMIN = "ADMIN";
     public static final String MANAGER = "MANAGER";
     public static final String NORMAL = "NORMAL";
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedMethods("*");
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -53,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 .anyRequest()
                 .hasAnyAuthority(NORMAL, ADMIN, MANAGER)).httpBasic();
 
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
     }
 
 
