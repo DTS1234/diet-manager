@@ -1,4 +1,4 @@
-package uep.diet.manager.meal;
+package uep.diet.manager.acceptance;
 
 import groovy.util.logging.Slf4j;
 import org.hamcrest.Matchers;
@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @Slf4j
-class GetAllMealsAcceptanceTest {
+class GetAllMealsAT {
 
     @LocalServerPort
     private int port;

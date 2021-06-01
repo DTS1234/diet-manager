@@ -1,4 +1,4 @@
-package uep.diet.manager.ingredient;
+package uep.diet.manager.acceptance;
 
 import groovy.util.logging.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import uep.diet.manager.TestIngredient;
+import uep.diet.manager.ingredient.IngredientAssertions;
 import uep.diet.manager.ingredient.domain.data.Ingredient;
 import uep.diet.manager.ingredient.domain.data.IngredientRepository;
 
@@ -26,7 +27,7 @@ import static org.hamcrest.Matchers.*;
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @Slf4j
-class CreateIngredientAcceptanceTest {
+class CreateIngredientAT {
 
     @LocalServerPort
     private int port;
