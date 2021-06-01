@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class UpdateIngredientsDTO {
 
-    private List<QuantityDTO> quantityListDTO;
-    private List<IngredientDTO> ingredientDTOList;
+    private List<QuantityDTO> quantities;
+    private List<IngredientDTO> ingredients;
 
 }
