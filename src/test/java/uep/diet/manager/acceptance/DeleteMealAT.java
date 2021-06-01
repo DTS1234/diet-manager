@@ -1,4 +1,4 @@
-package uep.diet.manager.meal;
+package uep.diet.manager.acceptance;
 
 import groovy.util.logging.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @Slf4j
-class DeleteMealAcceptanceTest {
+class DeleteMealAT {
 
     @LocalServerPort
     private int port;

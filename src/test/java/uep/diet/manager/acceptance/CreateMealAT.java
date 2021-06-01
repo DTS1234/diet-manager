@@ -1,4 +1,4 @@
-package uep.diet.manager.meal;
+package uep.diet.manager.acceptance;
 
 import groovy.util.logging.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +11,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import uep.diet.manager.TestIngredient;
 import uep.diet.manager.ingredient.domain.data.Ingredient;
+import uep.diet.manager.meal.MealAssertions;
+import uep.diet.manager.meal.TestMeal;
 import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.domain.data.MealRepository;
 import uep.diet.manager.meal.dto.MealDTO;
@@ -28,7 +30,7 @@ import static org.hamcrest.Matchers.*;
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @Slf4j
-class CreateMealAcceptanceTest {
+class CreateMealAT {
 
     @LocalServerPort
     private int port;
