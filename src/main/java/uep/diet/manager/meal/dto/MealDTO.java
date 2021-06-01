@@ -12,7 +12,7 @@ import java.util.List;
  * @date 27.03.2021
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude()
 public class MealDTO {
 
     private String name;
