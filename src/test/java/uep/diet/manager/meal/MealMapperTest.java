@@ -1,21 +1,17 @@
 package uep.diet.manager.meal;
 
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import uep.diet.manager.ingredient.TestIngredient;
-import uep.diet.manager.ingredient.domain.data.Ingredient;
 import uep.diet.manager.meal.domain.data.Meal;
-import uep.diet.manager.meal.domain.data.Quantity;
 import uep.diet.manager.meal.dto.MealDTO;
 import uep.diet.manager.meal.dto.MealMapper;
-import uep.diet.manager.meal.quantities.TestQuantities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @date 29.05.2021
@@ -24,7 +20,7 @@ class MealMapperTest {
 
 
     @Test
-    void shouldMapMealCorrectly_nullQuantites() {
+    void shouldMapMealCorrectlys() {
 
         Meal meal = new Meal();
         meal.setMealId(1L);
@@ -33,7 +29,7 @@ class MealMapperTest {
                 TestIngredient.basicWithId(2L)
         ));
         meal.setName("Test name");
-        meal.setQuantities(null);
+
 
         MealDTO actual = MealMapper.toDTO(meal);
 
@@ -42,9 +38,6 @@ class MealMapperTest {
         assertThat(actual.getIngredients()).isEqualTo(Arrays.asList(
                 TestIngredient.basicWithIdDTO(1L),
                 TestIngredient.basicWithIdDTO(2L)));
-
-        assertThat(actual.getQuantities())
-                .isEqualTo(TestQuantities.defaultQuantitiesDTOList(meal.getIngredients().stream().map(Ingredient::getIngredientId).collect(Collectors.toList())));
 
     }
 
@@ -58,7 +51,6 @@ class MealMapperTest {
                 TestIngredient.basicWithId(2L)
         ));
         meal.setName("Test name");
-        meal.setQuantities(Collections.emptyList());
 
         MealDTO actual = MealMapper.toDTO(meal);
 
@@ -67,10 +59,6 @@ class MealMapperTest {
         assertThat(actual.getIngredients()).isEqualTo(Arrays.asList(
                 TestIngredient.basicWithIdDTO(1L),
                 TestIngredient.basicWithIdDTO(2L)));
-
-        assertThat(actual.getQuantities())
-                .isEqualTo(TestQuantities.defaultQuantitiesDTOList(meal.getIngredients().stream().map(Ingredient::getIngredientId).collect(Collectors.toList())));
-
     }
 
     @Test
@@ -83,7 +71,6 @@ class MealMapperTest {
                 TestIngredient.basicWithId(2L)
         ));
         meal.setName("Test name");
-        meal.setQuantities(Arrays.asList(Quantity.of(10, meal), Quantity.of(12, meal)));
 
         MealDTO actual = MealMapper.toDTO(meal);
 
@@ -92,10 +79,6 @@ class MealMapperTest {
         assertThat(actual.getIngredients()).isEqualTo(Arrays.asList(
                 TestIngredient.basicWithIdDTO(1L),
                 TestIngredient.basicWithIdDTO(2L)));
-
-        assertThat(actual.getQuantities())
-                .isEqualTo(TestQuantities.quantitesDTOForMeal(meal, 10, 12));
-
     }
 
     @Test
@@ -108,7 +91,6 @@ class MealMapperTest {
                 TestIngredient.basicWithId(2L)
         ));
         meal.setName("Test name");
-        meal.setQuantities(new ArrayList<Quantity>(Collections.singletonList(Quantity.of(10, meal))));
 
         MealDTO actual = MealMapper.toDTO(meal);
 
@@ -117,10 +99,6 @@ class MealMapperTest {
         assertThat(actual.getIngredients()).isEqualTo(Arrays.asList(
                 TestIngredient.basicWithIdDTO(1L),
                 TestIngredient.basicWithIdDTO(2L)));
-
-        assertThat(actual.getQuantities())
-                .isEqualTo(TestQuantities.quantitesDTOForMeal(meal, 10, 0));
-
     }
 
     @Test
@@ -132,7 +110,6 @@ class MealMapperTest {
                 TestIngredient.basicWithId(1L)
         ));
         meal.setName("Test name");
-        meal.setQuantities(new ArrayList<Quantity>(Arrays.asList(Quantity.of(34, meal), Quantity.of(23, meal))));
 
         MealDTO actual = MealMapper.toDTO(meal);
 
@@ -140,10 +117,6 @@ class MealMapperTest {
         assertThat(actual.getId()).isEqualTo(1L);
         assertThat(actual.getIngredients()).isEqualTo(Collections.singletonList(
                 TestIngredient.basicWithIdDTO(1L)));
-
-        assertThat(actual.getQuantities())
-                .isEqualTo(TestQuantities.quantitesDTOForMeal(meal, 34));
-
     }
 
 

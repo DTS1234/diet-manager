@@ -48,7 +48,6 @@ class CreateMealTest {
         Meal testMeal = new Meal();
         testMeal.setMealId(1L);
         testMeal.setIngredients(null);
-        testMeal.setQuantities(null);
         testMeal.setImgLink("img link");
         testMeal.setName("some-name");
 
@@ -81,7 +80,6 @@ class CreateMealTest {
         Meal testMeal = new Meal();
         testMeal.setMealId(1L);
         testMeal.setIngredients(Arrays.asList(TestIngredient.basicWithId(1L), TestIngredient.basicWithId(2L)));
-        testMeal.setQuantities(null);
         testMeal.setImgLink("img link");
         testMeal.setName("some-name");
 
