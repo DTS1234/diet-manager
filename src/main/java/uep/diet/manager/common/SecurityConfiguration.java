@@ -49,6 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority(NORMAL, ADMIN, MANAGER)).httpBasic();
 
         http.cors().and().csrf().disable();
+        http.headers().frameOptions().disable();
     }
 
 
@@ -64,7 +65,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/webjars/**",
                 // -- Swagger UI v3 (OpenAPI)
                 "/v3/api-docs/**",
-                "/swagger-ui/**");
+                "/swagger-ui/**",
+                "**/h2-console/**");
     }
 
 

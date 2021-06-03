@@ -11,8 +11,5 @@ import java.util.List;
  */
 @Data
 public class UpdateIngredientsDTO {
-
-    private List<QuantityDTO> quantities;
     private List<IngredientDTO> ingredients;
-
 }

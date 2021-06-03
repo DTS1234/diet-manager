@@ -33,7 +33,7 @@ public class CalculateCaloriesTransaction {
             mealCaloriesDTO.setCalories(0);
         } else {
             int calories = ingredientList.stream()
-                    .map(Ingredient::getCaloriesPer100g)
+                    .map(ingredient -> (ingredient.getCaloriesPer100g() * ingredient.getQuantityInGrams()) / 100)
                     .reduce(0, Integer::sum);
             mealCaloriesDTO.setCalories(calories);
         }

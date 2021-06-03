@@ -4,22 +4,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import uep.diet.manager.TestIngredient;
+import uep.diet.manager.ingredient.TestIngredient;
 import uep.diet.manager.ingredient.domain.data.IngredientRepository;
 import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.domain.data.MealRepository;
 import uep.diet.manager.meal.domain.service.MealService;
-import uep.diet.manager.meal.domain.data.Quantity;
 import uep.diet.manager.meal.dto.MealDTO;
-import uep.diet.manager.meal.dto.MealMapper;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -62,7 +60,6 @@ class CreateMealTest {
 
         MealDTO expected = new MealDTO();
         expected.setIngredients(Collections.emptyList());
-        expected.setQuantities(Collections.emptyList());
         expected.setName("some-name");
         expected.setImgLink("img link");
         expected.setMealType("");
@@ -95,8 +92,6 @@ class CreateMealTest {
         MealDTO actual = subject.createMeal(mealDTO);
 
         MealDTO expected = new MealDTO();
-        expected.setQuantities(Arrays.asList(MealMapper.quantityToDTO(Quantity.of(0, testMeal)),
-                MealMapper.quantityToDTO(Quantity.of(0, testMeal))));
         expected.setName("some-name");
         expected.setImgLink("img link");
         expected.setId(1L);

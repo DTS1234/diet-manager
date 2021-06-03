@@ -26,14 +26,10 @@ public class Meal {
     private String imgLink;
     private String mealType;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "meal")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "meal")
     private List<Ingredient> ingredients;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "meals")
     private Set<Day> days;
-
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meal")
-    private List<Quantity> quantities;
 
 }

@@ -1,6 +1,6 @@
 package uep.diet.manager.meal;
 
-import uep.diet.manager.TestIngredient;
+import uep.diet.manager.ingredient.TestIngredient;
 import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.domain.data.Quantity;
 import uep.diet.manager.meal.dto.MealDTO;

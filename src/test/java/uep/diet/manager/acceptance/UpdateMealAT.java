@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-import uep.diet.manager.TestIngredient;
+import uep.diet.manager.ingredient.TestIngredient;
 import uep.diet.manager.ingredient.domain.data.IngredientRepository;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
 import uep.diet.manager.meal.MealAssertions;

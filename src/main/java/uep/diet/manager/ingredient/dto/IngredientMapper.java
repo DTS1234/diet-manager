@@ -16,6 +16,7 @@ public class IngredientMapper {
         int fat = ingredient.getFat();
         int protein = ingredient.getProtein();
         int carbs = ingredient.getCarbohydrates();
+        int quantity = ingredient.getQuantityInGrams();
 
         IngredientDTO ingredientDTO = new IngredientDTO();
         ingredientDTO.setCaloriesPer100g(calories);
@@ -24,6 +25,7 @@ public class IngredientMapper {
         ingredientDTO.setCarbohydrates(carbs);
         ingredientDTO.setFat(fat);
         ingredientDTO.setProtein(protein);
+        ingredientDTO.setQuantityInGrams(quantity);
 
         return ingredientDTO;
     }
@@ -36,6 +38,7 @@ public class IngredientMapper {
         int fat = ingredientDTO.getFat();
         int protein = ingredientDTO.getProtein();
         int carbs = ingredientDTO.getCarbohydrates();
+        int quantityInGrams = ingredientDTO.getQuantityInGrams();
 
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientId(id);
@@ -44,7 +47,7 @@ public class IngredientMapper {
         ingredient.setCarbohydrates(carbs);
         ingredient.setFat(fat);
         ingredient.setProtein(protein);
-
+        ingredient.setQuantityInGrams(quantityInGrams);
 
         return ingredient;
     }

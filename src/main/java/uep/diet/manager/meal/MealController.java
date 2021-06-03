@@ -67,19 +67,6 @@ public class MealController {
         return mealService.addIngredientToMeal(mealId, ingredientId);
     }
 
-    @PostMapping("/{mealId}/addQuantityToIngredient/{ingredientId}/newQuantity/{quantity}")
-    public MealDTO addQuantityToIngredient(@PathVariable Long mealId,
-                                           @PathVariable Long ingredientId,
-                                           @PathVariable Integer quantity) {
-        return mealService.changeQuantityForIngredientInMeal(quantity, mealId, ingredientId);
-    }
-
-    @PatchMapping("/{mealId}/updateIngredients/")
-    public UpdateIngredientsDTO updateIngredients(@PathVariable Long mealId, @RequestBody UpdateIngredientsDTO body)
-    {
-        return mealService.updateMealIngredients(body, mealId);
-    }
-
     @PatchMapping("/{mealId}/updateFields/")
     public UpdateFieldsDTO updateMealFields(@PathVariable Long mealId, @RequestBody UpdateFieldsDTO body)
     {

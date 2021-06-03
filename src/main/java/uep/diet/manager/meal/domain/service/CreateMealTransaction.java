@@ -10,7 +10,7 @@ import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.domain.data.MealRepository;
 import uep.diet.manager.meal.domain.exception.MealCreationException;
 import uep.diet.manager.meal.dto.MealDTO;
-import uep.diet.manager.meal.dto.QuantityDTO;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +36,6 @@ class CreateMealTransaction {
 
     public Meal execute() {
 
-        List<QuantityDTO> passedQuantities = mealDTO.getQuantities() == null ? Collections.emptyList() : mealDTO.getQuantities();
         List<IngredientDTO> passedIngredients = mealDTO.getIngredients() == null ? Collections.emptyList() : mealDTO.getIngredients();
         String passedName = mealDTO.getName();
         String passedImgLink = mealDTO.getImgLink() == null ? "" : mealDTO.getImgLink();
@@ -45,7 +44,6 @@ class CreateMealTransaction {
         Meal mealToBeSaved = new Meal();
         mealToBeSaved.setName(passedName);
         mealToBeSaved.setImgLink(passedImgLink);
-        changeNullsForEmptyCollections(passedQuantities, passedIngredients, mealToBeSaved);
 
         List<Ingredient> existingIngredients = getExistingIngredientsByIds(passedIngredients);
         List<Ingredient> newIngredients = getNewIngredientsFromDTOBody(passedIngredients);
@@ -95,16 +93,6 @@ class CreateMealTransaction {
 
         log.info("Found following ingredients by id's " + existingIngredients);
         return existingIngredients;
-    }
-
-    private void changeNullsForEmptyCollections(List<QuantityDTO> passedQuantities, List<IngredientDTO> passedIngredients, Meal mealToBeSaved) {
-        if (passedIngredients.isEmpty()) {
-            mealToBeSaved.setIngredients(Collections.emptyList());
-        }
-
-        if (passedQuantities.isEmpty()) {
-            mealToBeSaved.setQuantities(Collections.emptyList());
-        }
     }
 
     private void checkName(String passedName) {

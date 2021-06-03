@@ -1,16 +1,16 @@
 package uep.diet.manager.meal.domain.service;
 
 import uep.diet.manager.ingredient.domain.data.Ingredient;
-import uep.diet.manager.ingredient.domain.data.IngredientRepository;
+import uep.diet.manager.ingredient.dto.IngredientDTO;
+import uep.diet.manager.ingredient.dto.IngredientMapper;
 import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.domain.data.MealRepository;
 import uep.diet.manager.meal.domain.exception.MealNotFoundException;
 import uep.diet.manager.meal.dto.MealDTO;
-import uep.diet.manager.meal.dto.MealMapper;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author akazmierczak
@@ -18,42 +18,30 @@ import java.util.Optional;
  */
 class UpdateMealTransaction {
 
-    Meal execute(Long id, MealRepository mealRepository, IngredientRepository ingredientRepository, MealDTO newMeal) {
-        Meal newMealEntity = MealMapper.toEntity(newMeal);
-        Meal savedMeal;
-        Optional<Meal> optionalMeal = mealRepository.findById(id);
+    Meal execute(Long id, MealRepository mealRepository, MealDTO newMeal) {
 
-        if (optionalMeal.isPresent()) {
+        Meal mealToBeUpdated = mealRepository.findById(id).orElseThrow(MealNotFoundException::new);
+        updatedIngredients(mealRepository, newMeal, mealToBeUpdated);
 
-            Meal oldMeal = optionalMeal.get();
-            newMealEntity.setMealId(oldMeal.getMealId());
+        String newMealName = newMeal.getName();
+        mealToBeUpdated.setName(newMealName);
 
-            savedMeal = mealRepository.save(newMealEntity);
+        String mealType = newMeal.getMealType();
+        mealToBeUpdated.setMealType(mealType);
 
-            List<Ingredient> savedMealIngredients = savedMeal.getIngredients();
+        String imgLink = newMeal.getImgLink();
+        mealToBeUpdated.setImgLink(imgLink);
 
-            if (savedMealIngredients == null) {
-                savedMealIngredients = new ArrayList<>();
-            }
+        return mealRepository.save(mealToBeUpdated);
+    }
 
-            savedMealIngredients
-                    .forEach(ingredient ->
-                    {
-                        List<Meal> ingredientMeals = ingredient.getMeal();
-
-                        if (ingredientMeals == null) {
-                            ingredientMeals = new ArrayList<>();
-                        }
-
-                        ingredientMeals.add(savedMeal);
-                        ingredient.setMeal(ingredientMeals);
-                        ingredientRepository.save(ingredient);
-                    });
-
-            return savedMeal;
-        }
-
-        throw new MealNotFoundException(id);
+    private void updatedIngredients(MealRepository mealRepository, MealDTO newMeal, Meal mealToBeUpdated) {
+        List<IngredientDTO> newIngredients = newMeal.getIngredients();
+        List<Ingredient> ingredientsEntities = newIngredients.stream().map(IngredientMapper::toEntity).collect(Collectors.toList());
+        mealToBeUpdated.setIngredients(Collections.emptyList());
+        mealRepository.save(mealToBeUpdated);
+        mealToBeUpdated.setIngredients(ingredientsEntities);
+        mealRepository.save(mealToBeUpdated);
     }
 
 }
