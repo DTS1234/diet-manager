@@ -12,13 +12,12 @@ import java.util.List;
  * @date 27.03.2021
  */
 @Data
-@JsonInclude()
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class MealDTO {
 
     private String name;
     private Long id;
     private List<IngredientDTO> ingredients;
-    private List<QuantityDTO> quantities;
     @JsonProperty("imageLink")
     private String imgLink;
     private String mealType;

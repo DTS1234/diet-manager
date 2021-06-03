@@ -20,16 +20,14 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ingredientId;
 
-    @ManyToMany
-    @JoinTable(
-            name = "ingredient_meal",
-            joinColumns = @JoinColumn(name = "mealId"),
-            inverseJoinColumns = @JoinColumn(name = "ingredientId"))
-    private List<Meal> meal;
+    @ManyToOne
+    private Meal meal;
 
     private int caloriesPer100g;
     private String name;
     private int fat;
     private int protein;
     private int carbohydrates;
+    private int quantityInGrams;
+
 }

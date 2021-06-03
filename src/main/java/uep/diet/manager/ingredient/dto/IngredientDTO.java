@@ -20,4 +20,5 @@ public class IngredientDTO {
     private int fat;
     private int protein;
     private int carbohydrates;
+    private int quantityInGrams;
 }

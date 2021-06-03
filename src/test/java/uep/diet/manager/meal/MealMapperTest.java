@@ -4,7 +4,7 @@ package uep.diet.manager.meal;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import uep.diet.manager.TestIngredient;
+import uep.diet.manager.ingredient.TestIngredient;
 import uep.diet.manager.ingredient.domain.data.Ingredient;
 import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.domain.data.Quantity;

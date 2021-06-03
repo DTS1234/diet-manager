@@ -32,6 +32,8 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             user.setPassword(this.passwordEncoder.encode(PASSWORD));
             user.setUsername("adminUser");
             user.addAuthority("ADMIN");
+            user.setFirstName("Admin");
+            user.setLastName("Someone");
             userRepository.save(user);
 
             log.info("SAVED admin user !");
@@ -46,6 +48,8 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             user.setPassword(this.passwordEncoder.encode(PASSWORD));
             user.setUsername("normalUser");
             user.addAuthority("NORMAL");
+            user.setFirstName("Normal");
+            user.setLastName("Someguy");
             userRepository.save(user);
 
             log.info("SAVED normal user !");
@@ -60,6 +64,8 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             user.setPassword(this.passwordEncoder.encode(PASSWORD));
             user.setUsername("managerUser");
             user.addAuthority("MANAGER");
+            user.setFirstName("Manager");
+            user.setLastName("SomeOne");
             userRepository.save(user);
 
             log.info("SAVED manager user !");

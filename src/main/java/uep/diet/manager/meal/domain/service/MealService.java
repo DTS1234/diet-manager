@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import uep.diet.manager.ingredient.domain.data.Ingredient;
-import uep.diet.manager.ingredient.domain.exception.IngredientNotFoundException;
 import uep.diet.manager.ingredient.domain.data.IngredientRepository;
+import uep.diet.manager.ingredient.domain.exception.IngredientNotFoundException;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
 import uep.diet.manager.ingredient.dto.IngredientMapper;
 import uep.diet.manager.meal.domain.data.Meal;
@@ -14,7 +14,10 @@ import uep.diet.manager.meal.domain.exception.MealNotFoundException;
 import uep.diet.manager.meal.domain.exception.UpdateMealFieldsException;
 import uep.diet.manager.meal.dto.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -33,10 +36,7 @@ public class MealService {
         CreateMealTransaction createMealTransaction = new CreateMealTransaction(mealDTO, mealRepository, ingredientRepository);
         Meal createdMeal = createMealTransaction.execute();
 
-        UpdateMealTransaction updateMealTransaction = new UpdateMealTransaction();
-        Meal savedMeal = updateMealTransaction.execute(MealMapper.toDTO(createdMeal).getId(), mealRepository, ingredientRepository, MealMapper.toDTO(createdMeal));
-
-        return MealMapper.toDTO(savedMeal);
+        return MealMapper.toDTO(createdMeal);
     }
 
     public void deleteMeal(Long id) {
@@ -46,7 +46,7 @@ public class MealService {
 
     public MealDTO updateMeal(Long id, MealDTO newMealDTO) {
         UpdateMealTransaction updateMealTransaction = new UpdateMealTransaction();
-        Meal updatedMeal = updateMealTransaction.execute(id, mealRepository, ingredientRepository, newMealDTO);
+        Meal updatedMeal = updateMealTransaction.execute(id, mealRepository, newMealDTO);
         return MealMapper.toDTO(updatedMeal);
     }
 
@@ -109,11 +109,7 @@ public class MealService {
 
         Ingredient ingredientFound = ingredientRepository.findById(ingredientId).orElseThrow(IngredientNotFoundException::new);
         if (!mealIngredients.contains(ingredientFound)) {
-
-            List<Meal> meals = ingredientFound.getMeal();
-            meals.add(meal);
             ingredientRepository.save(ingredientFound);
-
             mealIngredients.add(ingredientFound);
         }
         meal.setIngredients(mealIngredients);
@@ -121,18 +117,6 @@ public class MealService {
         return MealMapper.toDTO(mealRepository.save(meal));
     }
 
-    public MealDTO changeQuantityForIngredientInMeal(Integer newQuantity, Long mealId, Long ingredientId) {
-        ChangeQuantityTransaction changeQuantityTransaction = new ChangeQuantityTransaction(mealRepository);
-        return changeQuantityTransaction.execute(newQuantity, mealId, ingredientId);
-    }
-
-    public UpdateIngredientsDTO updateMealIngredients(UpdateIngredientsDTO body,
-                                                      Long mealId) {
-        UpdateMealIngredientTransaction updateMealIngredientTransaction =
-                new UpdateMealIngredientTransaction(ingredientRepository, mealRepository, mealId, body);
-
-        return updateMealIngredientTransaction.execute();
-    }
 
     public UpdateFieldsDTO updateMealFields(UpdateFieldsDTO updateFieldsDTO, Long mealId) {
 
