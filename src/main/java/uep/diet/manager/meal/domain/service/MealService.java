@@ -46,7 +46,7 @@ public class MealService {
 
     public MealDTO updateMeal(Long id, MealDTO newMealDTO) {
         UpdateMealTransaction updateMealTransaction = new UpdateMealTransaction();
-        Meal updatedMeal = updateMealTransaction.execute(id, mealRepository, newMealDTO);
+        Meal updatedMeal = updateMealTransaction.execute(id, mealRepository, ingredientRepository, newMealDTO);
         return MealMapper.toDTO(updatedMeal);
     }
 

@@ -1,6 +1,7 @@
 package uep.diet.manager.meal.domain.service;
 
 import uep.diet.manager.ingredient.domain.data.Ingredient;
+import uep.diet.manager.ingredient.domain.data.IngredientRepository;
 import uep.diet.manager.ingredient.dto.IngredientDTO;
 import uep.diet.manager.ingredient.dto.IngredientMapper;
 import uep.diet.manager.meal.domain.data.Meal;
@@ -18,10 +19,10 @@ import java.util.stream.Collectors;
  */
 class UpdateMealTransaction {
 
-    Meal execute(Long id, MealRepository mealRepository, MealDTO newMeal) {
+    Meal execute(Long id, MealRepository mealRepository, IngredientRepository ingredientRepository,  MealDTO newMeal) {
 
         Meal mealToBeUpdated = mealRepository.findById(id).orElseThrow(MealNotFoundException::new);
-        updatedIngredients(mealRepository, newMeal, mealToBeUpdated);
+        mealToBeUpdated = updatedIngredients(mealRepository, newMeal, mealToBeUpdated, ingredientRepository);
 
         String newMealName = newMeal.getName();
         mealToBeUpdated.setName(newMealName);
@@ -35,13 +36,20 @@ class UpdateMealTransaction {
         return mealRepository.save(mealToBeUpdated);
     }
 
-    private void updatedIngredients(MealRepository mealRepository, MealDTO newMeal, Meal mealToBeUpdated) {
+    private Meal updatedIngredients(MealRepository mealRepository, MealDTO newMeal, Meal mealToBeUpdated, IngredientRepository ingredientRepository) {
+
+        mealToBeUpdated.getIngredients().forEach(ingredient -> ingredient.setMeal(null));
+
         List<IngredientDTO> newIngredients = newMeal.getIngredients();
         List<Ingredient> ingredientsEntities = newIngredients.stream().map(IngredientMapper::toEntity).collect(Collectors.toList());
         mealToBeUpdated.setIngredients(Collections.emptyList());
         mealRepository.save(mealToBeUpdated);
         mealToBeUpdated.setIngredients(ingredientsEntities);
-        mealRepository.save(mealToBeUpdated);
+
+        Meal save = mealRepository.save(mealToBeUpdated);
+        ingredientsEntities.forEach(i -> {i.setMeal(save);ingredientRepository.save(i);});
+
+        return save;
     }
 
 }
