@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author akazmierczak
@@ -52,10 +53,13 @@ class CreateMealTransaction {
         ingredientsToBeSaved.addAll(existingIngredients);
         ingredientsToBeSaved.addAll(newIngredients);
 
-        ingredientsToBeSaved.forEach(ingredientRepository::save);
-        mealToBeSaved.setIngredients(ingredientsToBeSaved);
+        Meal savedMeal = mealRepository.save(mealToBeSaved);
+        ingredientsToBeSaved.forEach(ingredient -> ingredient.setMeal(savedMeal));
 
-        return mealRepository.save(mealToBeSaved);
+        List<Ingredient> collect = ingredientsToBeSaved.stream().map(ingredientRepository::save).collect(Collectors.toList());
+        mealToBeSaved.setIngredients(collect);
+
+        return savedMeal;
     }
 
     private List<Ingredient> getNewIngredientsFromDTOBody(List<IngredientDTO> passedIngredients) {
