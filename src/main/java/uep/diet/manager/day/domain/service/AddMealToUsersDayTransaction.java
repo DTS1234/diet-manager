@@ -10,8 +10,10 @@ import uep.diet.manager.day.dto.DayMapper;
 import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.domain.data.MealRepoUtils;
 import uep.diet.manager.meal.domain.data.MealRepository;
+import uep.diet.manager.user.domain.data.User;
 import uep.diet.manager.user.domain.data.UserRepoUtils;
 import uep.diet.manager.user.domain.data.UserRepository;
+import uep.diet.manager.user.domain.exception.UserNotFoundException;
 
 import java.util.Collections;
 import java.util.List;
