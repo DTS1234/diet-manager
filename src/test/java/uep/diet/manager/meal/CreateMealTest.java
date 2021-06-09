@@ -69,34 +69,4 @@ class CreateMealTest {
                 .isEqualTo(expected);
     }
 
-    @Test
-    void createsMealFromMealDTOBodyCorrectly_WhenExistingIngredientsIdsInABody() {
-        //given
-        MealDTO mealDTO = new MealDTO();
-        mealDTO.setImgLink("img link");
-        mealDTO.setName("some-name");
-        mealDTO.setIngredients(Arrays.asList(TestIngredient.onlyWithIdDTO(1L), TestIngredient.onlyWithIdDTO(2L)));
-
-        Meal testMeal = new Meal();
-        testMeal.setMealId(1L);
-        testMeal.setIngredients(Arrays.asList(TestIngredient.basicWithId(1L), TestIngredient.basicWithId(2L)));
-        testMeal.setImgLink("img link");
-        testMeal.setName("some-name");
-
-        when(mealRepository.save(any())).thenReturn(testMeal);
-        when(mealRepository.findById(1L)).thenReturn(Optional.of(testMeal));
-
-        //when
-        MealDTO actual = subject.createMeal(mealDTO);
-
-        MealDTO expected = new MealDTO();
-        expected.setName("some-name");
-        expected.setImgLink("img link");
-        expected.setId(1L);
-
-        //then
-        assertThat(actual.getIngredients())
-                .isEqualTo(Arrays.asList(TestIngredient.basicWithIdDTO(1L), TestIngredient.basicWithIdDTO(2L)));
-    }
-
 }
