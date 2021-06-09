@@ -6,10 +6,18 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import uep.diet.manager.day.domain.service.DayService;
 import uep.diet.manager.day.dto.DayDTO;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Locale;
 
 /**
  * @author akazmierczak
@@ -40,7 +48,7 @@ public class DayController {
         return dayService.createDayForUser(userId, dayDTO);
     }
 
-    @PostMapping(value = "/user/{userId}/day/{dayId}/meal/{mealId}")
+    @PostMapping(value = "/user/{userId}/day/{dayId}/meal/{mealId}/deprecated")
     @Operation(description = "Adds meal to user's day.")
     public DayDTO addMealToUsersDay(@PathVariable Long userId,
                                     @PathVariable Long dayId,
@@ -57,5 +65,17 @@ public class DayController {
         return dayService.removeMealFromUsersDay(userId, dayId, mealId);
     }
 
+    @PostMapping(value = "/user/{userId}/day/{date}/meal/{mealId}")
+    @Operation(description = "Adds meal to user's day.")
+    public DayDTO addMealToUsersDay(@PathVariable Long userId,
+                                    @PathVariable String date,
+                                    @PathVariable Long mealId) {
+
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.GERMAN);
+        TemporalAccessor parse = simpleDateFormat.parse(date);
+        LocalDate localDate = LocalDate.from(parse);
+
+        return dayService.addMealToUsersDay(userId, localDate, mealId);
+    }
 
 }
