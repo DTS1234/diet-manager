@@ -40,11 +40,13 @@ class CreateMealTransaction {
         List<IngredientDTO> passedIngredients = mealDTO.getIngredients() == null ? Collections.emptyList() : mealDTO.getIngredients();
         String passedName = mealDTO.getName();
         String passedImgLink = mealDTO.getImgLink() == null ? "" : mealDTO.getImgLink();
+        String type = mealDTO.getMealType() == null ? "" : mealDTO.getMealType();
         checkName(passedName);
 
         Meal mealToBeSaved = new Meal();
         mealToBeSaved.setName(passedName);
         mealToBeSaved.setImgLink(passedImgLink);
+        mealToBeSaved.setMealType(type);
 
         List<Ingredient> existingIngredients = getExistingIngredientsByIds(passedIngredients);
         List<Ingredient> newIngredients = getNewIngredientsFromDTOBody(passedIngredients);
