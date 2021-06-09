@@ -19,19 +19,27 @@ import java.util.stream.Collectors;
  */
 class UpdateMealTransaction {
 
-    Meal execute(Long id, MealRepository mealRepository, IngredientRepository ingredientRepository,  MealDTO newMeal) {
+    Meal execute(Long id, MealRepository mealRepository, IngredientRepository ingredientRepository, MealDTO newMeal) {
 
         Meal mealToBeUpdated = mealRepository.findById(id).orElseThrow(MealNotFoundException::new);
         mealToBeUpdated = updatedIngredients(mealRepository, newMeal, mealToBeUpdated, ingredientRepository);
 
         String newMealName = newMeal.getName();
-        mealToBeUpdated.setName(newMealName);
+
+        if (newMealName != null && !newMealName.equals("")) {
+            mealToBeUpdated.setName(newMealName);
+        }
 
         String mealType = newMeal.getMealType();
-        mealToBeUpdated.setMealType(mealType);
+
+        if (mealType != null && !mealType.equals("")) {
+            mealToBeUpdated.setMealType(mealType);
+        }
 
         String imgLink = newMeal.getImgLink();
-        mealToBeUpdated.setImgLink(imgLink);
+        if (imgLink != null && !imgLink.equals("")) {
+            mealToBeUpdated.setImgLink(imgLink);
+        }
 
         return mealRepository.save(mealToBeUpdated);
     }
@@ -47,7 +55,10 @@ class UpdateMealTransaction {
         mealToBeUpdated.setIngredients(ingredientsEntities);
 
         Meal save = mealRepository.save(mealToBeUpdated);
-        ingredientsEntities.forEach(i -> {i.setMeal(save);ingredientRepository.save(i);});
+        ingredientsEntities.forEach(i -> {
+            i.setMeal(save);
+            ingredientRepository.save(i);
+        });
 
         return save;
     }
