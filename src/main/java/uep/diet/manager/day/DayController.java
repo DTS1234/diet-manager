@@ -33,18 +33,18 @@ public class DayController {
     @PostMapping(value = "/user/{userId}/day", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Adds date record for user with given id, user can have only one day with specific date.")
     public DayDTO createDayForUser(@PathVariable Long userId,
-                                    @RequestBody
-                                    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                            description = "Only paste date here.",
-                                            required = true,
-                                            content = @Content(
-                                            schema = @Schema(implementation = DayDTO.class),
-                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                            examples = {
-                                                    @ExampleObject(value = "{\"date\": \"2021-10-10\"}")
-                                            }
-                                            ))
-                                            DayDTO dayDTO) {
+                                   @RequestBody
+                                   @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                           description = "Only paste date here.",
+                                           required = true,
+                                           content = @Content(
+                                                   schema = @Schema(implementation = DayDTO.class),
+                                                   mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                                   examples = {
+                                                           @ExampleObject(value = "{\"date\": \"2021-10-10\"}")
+                                                   }
+                                           ))
+                                           DayDTO dayDTO) {
         return dayService.createDayForUser(userId, dayDTO);
     }
 
@@ -60,8 +60,7 @@ public class DayController {
     @Operation(description = "Removes meal from users day record.")
     public DayDTO removeMealFromUsersDay(@PathVariable Long userId,
                                          @PathVariable Long dayId,
-                                         @PathVariable Long mealId)
-    {
+                                         @PathVariable Long mealId) {
         return dayService.removeMealFromUsersDay(userId, dayId, mealId);
     }
 
@@ -71,11 +70,22 @@ public class DayController {
                                     @PathVariable String date,
                                     @PathVariable Long mealId) {
 
-        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.GERMAN);
-        TemporalAccessor parse = simpleDateFormat.parse(date);
-        LocalDate localDate = LocalDate.from(parse);
+        LocalDate localDate = getLocalDate(date);
 
         return dayService.addMealToUsersDay(userId, localDate, mealId);
+    }
+
+    @GetMapping("/user/{userId}/day/{date}")
+    public int getCaloriesFromDay(@PathVariable Long userId, @PathVariable String date) {
+
+        LocalDate localDate = getLocalDate(date);
+        return dayService.sumCaloriesPerDay(localDate, userId);
+    }
+
+    private LocalDate getLocalDate(String date) {
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.GERMAN);
+        TemporalAccessor parse = simpleDateFormat.parse(date);
+        return LocalDate.from(parse);
     }
 
 }

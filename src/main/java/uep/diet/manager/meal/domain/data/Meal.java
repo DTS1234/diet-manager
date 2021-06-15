@@ -10,6 +10,7 @@ import uep.diet.manager.ingredient.domain.data.Ingredient;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author akazmierczak
@@ -31,5 +32,12 @@ public class Meal {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "meals")
     private Set<Day> days;
+
+    public int getCalories() {
+        return ingredients
+                .stream()
+                .mapToInt(value -> (value.getCaloriesPer100g() * value.getQuantityInGrams()) / 100).sum();
+    }
+
 
 }

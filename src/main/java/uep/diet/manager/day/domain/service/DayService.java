@@ -33,7 +33,9 @@ public class DayService {
     private final UserRepository userRepository;
     private final MealRepository mealRepository;
 
-    /** Adds a day record to user for a particular date, only one day can be registered to one date. */
+    /**
+     * Adds a day record to user for a particular date, only one day can be registered to one date.
+     */
     public DayDTO createDayForUser(Long userId, DayDTO dayDTO) {
         AddDayToUserTransaction addDayToUserTransaction = new AddDayToUserTransaction(userRepository, dayRepository);
         return addDayToUserTransaction.execute(userId, dayDTO);
@@ -49,16 +51,14 @@ public class DayService {
         return removeMealFromUsersDayTransaction.execute(userId, dayId, mealId);
     }
 
-    public DayDTO addMealToUsersDay(Long userId, LocalDate date, Long mealId){
+    public DayDTO addMealToUsersDay(Long userId, LocalDate date, Long mealId) {
 
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        Day dayFound = user.getDays().stream().filter(day -> day.getDate().equals(date)).findFirst().orElseThrow(() -> new DayNotFoundException("Day does not exist."));
+        Day dayFound = findDayByDate(userId, date);
 
         List<Meal> meals = dayFound.getMeals();
         Meal meal = mealRepository.findById(mealId).orElseThrow(MealNotFoundException::new);
 
-        if (!meals.contains(meal))
-        {
+        if (!meals.contains(meal)) {
             meals.add(meal);
         }
 
@@ -72,6 +72,19 @@ public class DayService {
         mealRepository.save(meal);
 
         return DayMapper.toDTO(save);
+    }
+
+    public int sumCaloriesPerDay(LocalDate date, Long userId) {
+        Day day = findDayByDate(userId, date);
+        return day.getMeals().stream().map(Meal::getCalories).mapToInt(value -> value).sum();
+    }
+
+    private Day findDayByDate(Long userId, LocalDate date) {
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        return user.getDays()
+                .stream()
+                .filter(day -> day.getDate().equals(date)).findFirst()
+                .orElseThrow(() -> new DayNotFoundException("Day does not exist."));
     }
 
 }
