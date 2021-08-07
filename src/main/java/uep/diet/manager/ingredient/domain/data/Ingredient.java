@@ -1,5 +1,9 @@
 package uep.diet.manager.ingredient.domain.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import uep.diet.manager.meal.domain.data.Meal;
 

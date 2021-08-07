@@ -9,6 +9,8 @@ services:
       - MYSQL_PASSWORD=root
     ports:
     - 9999:3306
+    volumes:
+      - dietmanager:/docker-volume
   app:
     image: 9909733/diet-manager
     depends_on:
@@ -21,3 +23,6 @@ services:
       - DATABASE_PASSWORD=root
       - DATABASE_NAME=test
       - DATABASE_PORT=9999
+volumes:
+  dietmanager:
+    external: true

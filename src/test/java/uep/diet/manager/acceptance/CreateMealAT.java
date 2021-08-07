@@ -16,6 +16,7 @@ import uep.diet.manager.meal.TestMeal;
 import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.domain.data.MealRepository;
 import uep.diet.manager.meal.dto.MealDTO;
+import uep.diet.manager.meal.dto.MealMapper;
 
 import java.util.Optional;
 
@@ -46,10 +47,8 @@ class CreateMealAT {
     @Test
     @Sql("/create_meal_case.sql")
     void addMealRequestShouldReturnSuccessAndAddMeal() {
-        Ingredient testIngredient1 = TestIngredient.basicWithName("Test 1");
-        Ingredient testIngredient2 = TestIngredient.basicWithName("Test 2");
 
-        given()
+        MealDTO actual = given()
                 .port(port)
                 .contentType("application/json")
                 .auth().preemptive().basic("adminUser", "pass123")
@@ -57,15 +56,15 @@ class CreateMealAT {
                 .when()
                 .post("meal/create")
                 .then()
-            .statusCode(201)
-                .body("id", is(greaterThan(0)))
-                .body("name", equalTo("Pancakes"))
-                .body("ingredients.id", hasItems(is(greaterThan(0)), is(greaterThan(0))))
-                .body("ingredients.name", hasItems("Test 1", "Test 2"))
-                .body("ingredients.caloriesPer100g", hasItems(testIngredient1.getCaloriesPer100g(), testIngredient2.getCaloriesPer100g()))
-                .body("ingredients.fat", hasItems(testIngredient1.getFat(), testIngredient2.getFat()))
-                .body("ingredients.carbohydrates", hasItems(testIngredient1.getCarbohydrates(), testIngredient2.getCarbohydrates()))
-                .body("ingredients.protein", hasItems(testIngredient1.getProtein(), testIngredient2.getProtein()));
+                .statusCode(201)
+                .extract().as(MealDTO.class);
+
+        Meal actualEntity = MealMapper.toEntity(actual);
+
+        MealAssertions.assertThat(actualEntity)
+                .hasName(anyValidMeal.getName())
+                .hasIngredientWithName("Test 1", 0)
+                .hasIngredientWithName("Test 2", 1);
 
         Meal mealFound = getMealFromDatabase();
         MealAssertions.assertThat(mealFound)
