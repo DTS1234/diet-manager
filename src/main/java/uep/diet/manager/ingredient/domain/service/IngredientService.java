@@ -49,12 +49,6 @@ public class IngredientService {
         IngredientDTOList ingredientDTOList = new IngredientDTOList();
 
         List<Ingredient> ingredientList = ingredientRepository.findAll();
-        List<IngredientDTO> targetList = new ArrayList<>();
-
-        if (ingredientList == null) {
-            ingredientDTOList.setIngredients(targetList);
-            return ingredientDTOList;
-        }
 
         ingredientDTOList.setIngredients(ingredientList.stream().map(IngredientMapper::toDto).collect(Collectors.toList()));
         return ingredientDTOList;
