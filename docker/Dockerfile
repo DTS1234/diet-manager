@@ -1,11 +1,17 @@
-FROM java:8
+FROM gradle:4.7.0-jdk8-alpine AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon
+
+FROM openjdk:8-jre-slim
 
 VOLUME /tmp
 
 EXPOSE 8080
 
-ADD /build/libs/diet-manager-0.0.1-SNAPSHOT.jar diet-manager-0.0.1-SNAPSHOT.jar
+RUN mkdir /app
 
-EXPOSE 8080
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
 
-ENTRYPOINT ["java", "-jar", "diet-manager-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.jar"]
+
