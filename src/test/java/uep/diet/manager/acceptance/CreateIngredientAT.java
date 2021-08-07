@@ -13,6 +13,8 @@ import uep.diet.manager.ingredient.TestIngredient;
 import uep.diet.manager.ingredient.IngredientAssertions;
 import uep.diet.manager.ingredient.domain.data.Ingredient;
 import uep.diet.manager.ingredient.domain.data.IngredientRepository;
+import uep.diet.manager.ingredient.dto.IngredientDTO;
+import uep.diet.manager.ingredient.dto.IngredientMapper;
 
 import java.util.Optional;
 
@@ -44,24 +46,27 @@ class CreateIngredientAT {
 
     @Test
     void addIngredientShouldCreateItAndReturnCreated() {
-        given()
+        IngredientDTO actual = given()
                 .port(port)
                 .contentType("application/json")
                 .auth().preemptive().basic("adminUser", "pass123")
                 .body(testIngredient)
-            .when()
+                .when()
                 .post("ingredient/create")
-            .then()
+                .then()
                 .statusCode(201)
-                .body("id", notNullValue())
-                .body("name", equalTo(testIngredient.getName()))
-                .body("caloriesPer100g", equalTo(testIngredient.getCaloriesPer100g()))
-                .body("fat", equalTo(testIngredient.getFat()))
-                .body("carbohydrates", equalTo(testIngredient.getCarbohydrates()))
-                .body("protein", equalTo(testIngredient.getProtein()));
+                .extract().as(IngredientDTO.class);
 
-        Ingredient ingredientFound = getIngredientFromDb();
-        IngredientAssertions.assertThat(ingredientFound)
+        Ingredient actualIngredientEntity = IngredientMapper.toEntity(actual);
+        IngredientAssertions.assertThat(actualIngredientEntity)
+                .hasCaloriesEqualTo(testIngredient.getCaloriesPer100g())
+                .hasCarbsEqualTo(testIngredient.getCarbohydrates())
+                .hasFatEqualTo(testIngredient.getFat())
+                .hasName(testIngredient.getName())
+                .hasProteinEqualTo(testIngredient.getProtein());
+
+        Ingredient actualIngredientInDb = getIngredientFromDb();
+        IngredientAssertions.assertThat(actualIngredientInDb)
                 .hasCaloriesEqualTo(testIngredient.getCaloriesPer100g())
                 .hasCarbsEqualTo(testIngredient.getCarbohydrates())
                 .hasFatEqualTo(testIngredient.getFat())

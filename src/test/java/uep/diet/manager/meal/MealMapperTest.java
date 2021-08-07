@@ -7,7 +7,6 @@ import uep.diet.manager.meal.domain.data.Meal;
 import uep.diet.manager.meal.dto.MealDTO;
 import uep.diet.manager.meal.dto.MealMapper;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
