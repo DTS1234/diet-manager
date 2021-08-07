@@ -19,7 +19,7 @@ class MealMapperTest {
 
 
     @Test
-    void shouldMapMealCorrectlys() {
+    void shouldMapMealCorrectly() {
 
         Meal meal = new Meal();
         meal.setMealId(1L);
